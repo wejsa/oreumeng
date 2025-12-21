@@ -7,7 +7,7 @@
     <meta name="description" content="시스템실링, 크린부스, FFU 설치 전문 시공업체 오름이엔지입니다. 반도체, 공장, 클린환경 맞춤 시공. 경기도 안성 소재, 8년 경력의 전문 시공.">
     <meta name="keywords" content="시스템실링, 크린부스, 클린룸, FFU, 클린환경, 반도체 시공, 안성">
     <meta property="og:title" content="오름이엔지 - 시스템실링 · 크린부스 전문 시공">
-    <meta property="og:description" content="클린환경 전문 시공업체 오름이엔지. 8년 경력의 믿을 수 있는 시공.">
+    <meta property="og:description" content="크린룸 전문 시공업체 오름이엔지. 믿을 수 있는 시공.">
     <meta property="og:type" content="website">
     
     <!-- Fonts -->
@@ -86,7 +86,7 @@
         }
 
         .logo img {
-            height: 40px;
+            height: 52px;
             width: auto;
         }
 
@@ -133,6 +133,12 @@
             border-radius: 50px;
             font-weight: 500;
             font-size: 0.9rem;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .header-phone:hover {
+            background: var(--primary-dark);
         }
 
         .header-phone svg {
@@ -402,10 +408,14 @@
 
         .about-image {
             position: relative;
+            height: 100%;
+            min-height: 400px;
         }
 
         .about-image img {
             width: 100%;
+            height: 100%;
+            object-fit: cover;
             border-radius: 20px;
             box-shadow: var(--shadow-xl);
         }
@@ -427,6 +437,27 @@
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 30px;
+            justify-items: center;
+        }
+
+        .services-grid .service-card:nth-child(4),
+        .services-grid .service-card:nth-child(5) {
+            grid-column: span 1;
+        }
+
+        @media (min-width: 1025px) {
+            .services-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            .services-grid .service-card {
+                grid-column: span 2;
+            }
+            .services-grid .service-card:nth-child(4) {
+                grid-column: 2 / span 2;
+            }
+            .services-grid .service-card:nth-child(5) {
+                grid-column: 4 / span 2;
+            }
         }
 
         .service-card {
@@ -648,11 +679,21 @@
             border: none;
         }
 
+        .contact-map .root_daum_roughmap {
+            width: 100% !important;
+            height: 400px !important;
+        }
+
+        .contact-map .root_daum_roughmap .wrap_map {
+            height: 400px !important;
+        }
+
         /* Footer */
         .footer {
-            background: var(--primary-dark);
-            color: var(--white);
+            background: #f8f9fa;
+            color: var(--gray-800);
             padding: 60px 20px 30px;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .footer-content {
@@ -665,7 +706,7 @@
             justify-content: space-between;
             align-items: flex-start;
             padding-bottom: 40px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
             margin-bottom: 30px;
             flex-wrap: wrap;
             gap: 30px;
@@ -681,7 +722,7 @@
         }
 
         .footer-logo img {
-            height: 36px;
+            height: 47px;
             width: auto;
         }
 
@@ -697,14 +738,13 @@
         }
 
         .footer-links a {
-            color: var(--white);
+            color: var(--gray-700);
             text-decoration: none;
-            opacity: 0.8;
-            transition: opacity 0.2s;
+            transition: color 0.2s;
         }
 
         .footer-links a:hover {
-            opacity: 1;
+            color: var(--primary);
         }
 
         .footer-bottom {
@@ -962,8 +1002,7 @@
     <header class="header">
         <div class="header-inner">
             <a href="#" class="logo">
-                <img src="images/로고.png" alt="오름이엔지 로고">
-                오름이엔지
+                <img src="images/oreumeng_logo.svg" alt="오름이엔지">
             </a>
             
             <nav class="nav">
@@ -974,12 +1013,12 @@
                 <a href="#contact">문의</a>
             </nav>
             
-            <span class="header-phone">
+            <a href="tel:010-4813-8280" class="header-phone">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
                 </svg>
                 010-4813-8280
-            </span>
+            </a>
 
             <button class="menu-btn" onclick="toggleMobileNav()">
                 <span></span>
@@ -1008,9 +1047,9 @@
     <section class="hero" id="home">
         <div class="hero-bg"></div>
         <div class="hero-content">
-            <div class="hero-badge">🏭 클린환경 전문 시공업체</div>
+            <div class="hero-badge">🏭 크린룸 전문 시공업체</div>
             <h1>시스템실링 · 크린부스<br><span>전문 시공</span></h1>
-            <p class="hero-desc">반도체, 제약, 연구시설 등 클린환경이 필요한 현장에<br>8년 경력의 맞춤 시공 서비스를 제공합니다</p>
+            <p class="hero-desc">반도체, 제약, 연구시설 등 클린환경이 필요한 현장에<br>맞춤 시공 서비스를 제공합니다</p>
             <div class="hero-cta">
                 <a href="tel:010-4813-8280" class="btn btn-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1034,32 +1073,28 @@
             <div class="about-grid">
                 <div class="about-content">
                     <div class="section-badge">ABOUT US</div>
-                    <h3>클린환경 시공의<br>믿을 수 있는 파트너</h3>
+                    <h3>크린룸 시공의<br>믿을 수 있는 파트너</h3>
                     <p>
-                        오름이엔지는 2017년 설립 이후, 시스템실링 및 크린부스 전문 시공업체로서 
-                        반도체, 제약, 연구시설 등 클린환경이 요구되는 다양한 산업 현장을 시공해 왔습니다.
+                        오름이엔지는 2018년 설립 이후, 시스템실링 및 크린부스 전문 시공업체로서
+                        반도체, 제약, 연구시설 등 크린룸이 요구되는 다양한 산업 현장을 시공해 왔습니다.
                     </p>
                     <p>
-                        현장의 특성과 고객의 요구사항을 정확히 파악하여, 
-                        최적의 클린환경 솔루션을 제공합니다.
+                        현장의 특성과 고객의 요구사항을 정확히 파악하여,
+                        최적의 크린룸 솔루션을 제공합니다.
                     </p>
                     <div class="about-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">8년</div>
-                            <div class="stat-label">시공 경력</div>
-                        </div>
                         <div class="stat-item">
                             <div class="stat-number">100+</div>
                             <div class="stat-label">시공 현장</div>
                         </div>
                         <div class="stat-item">
-                            <div class="stat-number">98%</div>
-                            <div class="stat-label">고객 만족도</div>
+                            <div class="stat-number" id="experience-years">20년+</div>
+                            <div class="stat-label">시공 경력</div>
                         </div>
                     </div>
                 </div>
                 <div class="about-image">
-                    <img src="images/작업1.jpg" alt="오름이엔지 클린룸 시공">
+                    <img src="images/CleanBooth/KakaoTalk_20251221_190041893_01.jpg" alt="오름이엔지 클린룸 시공">
                 </div>
             </div>
         </div>
@@ -1075,6 +1110,7 @@
             </div>
             
             <div class="services-grid">
+                <!-- 1. 시스템실링 -->
                 <div class="service-card">
                     <div class="service-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1084,9 +1120,10 @@
                         </svg>
                     </div>
                     <h3>시스템실링</h3>
-                    <p>클린환경 유지가 필요한 공간의 천장 실링 시공. 먼지와 오염을 차단하는 완벽한 마감으로 청정도를 유지합니다.</p>
+                    <p>크린룸 환경에 필요한 천장 실링 시공. 먼지와 오염을 차단하는 완벽한 마감으로 청정도를 유지합니다.</p>
                 </div>
-                
+
+                <!-- 2. 크린부스 -->
                 <div class="service-card">
                     <div class="service-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -1097,17 +1134,46 @@
                     <h3>크린부스</h3>
                     <p>작업 환경에 맞춘 맞춤형 크린부스 설계 및 시공. 현장 조건을 고려한 최적의 구조로 효율적인 클린 공간을 구축합니다.</p>
                 </div>
-                
+
+                <!-- 3. 판넬타입 -->
                 <div class="service-card">
                     <div class="service-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-                            <polyline points="2 17 12 22 22 17"/>
-                            <polyline points="2 12 12 17 22 12"/>
+                            <rect x="3" y="3" width="18" height="18" rx="2"/>
+                            <line x1="3" y1="9" x2="21" y2="9"/>
+                            <line x1="3" y1="15" x2="21" y2="15"/>
                         </svg>
                     </div>
-                    <h3>FFU 설치</h3>
-                    <p>팬필터유닛(FFU) 설치 및 배관 작업. 균일한 공기 흐름과 청정도를 위한 전문적인 설치 서비스를 제공합니다.</p>
+                    <h3>판넬타입</h3>
+                    <p>샌드위치 판넬을 활용한 크린룸 벽체 시공. 단열성과 기밀성을 갖춘 고품질 판넬로 안정적인 청정 환경을 제공합니다.</p>
+                </div>
+
+                <!-- 4. 커튼설치 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 3h16"/>
+                            <path d="M4 3v18"/>
+                            <path d="M20 3v18"/>
+                            <path d="M4 8c4 0 4 4 8 4s4-4 8-4"/>
+                            <path d="M4 14c4 0 4 4 8 4s4-4 8-4"/>
+                        </svg>
+                    </div>
+                    <h3>커튼설치</h3>
+                    <p>방진 비닐커튼 및 스트립커튼 설치. 공간 분리와 오염 방지를 위한 경제적이고 효율적인 솔루션을 제공합니다.</p>
+                </div>
+
+                <!-- 5. 파티션 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="18" rx="1"/>
+                            <rect x="14" y="3" width="7" height="18" rx="1"/>
+                            <line x1="10" y1="12" x2="14" y2="12"/>
+                        </svg>
+                    </div>
+                    <h3>파티션</h3>
+                    <p>고객 맞춤 작업공간 분리를 위한 프로파일 파티션 설치. 효율적인 공간 활용과 작업 환경 개선을 제공합니다.</p>
                 </div>
             </div>
         </div>
@@ -1124,72 +1190,161 @@
             
             <div class="portfolio-tabs">
                 <button class="tab-btn active" onclick="filterPortfolio('all')">전체</button>
+                <button class="tab-btn" onclick="filterPortfolio('ceiling')">시스템실링</button>
                 <button class="tab-btn" onclick="filterPortfolio('cleanroom')">크린부스</button>
-                <button class="tab-btn" onclick="filterPortfolio('ceiling')">시스템실링/FFU</button>
+                <button class="tab-btn" onclick="filterPortfolio('pannel')">판넬타입</button>
+                <button class="tab-btn" onclick="filterPortfolio('curtain')">커튼설치</button>
+                <button class="tab-btn" onclick="filterPortfolio('partition')">파티션</button>
             </div>
-            
+
             <div class="portfolio-grid">
-                <div class="portfolio-item" data-category="cleanroom" onclick="openLightbox('images/작업4.jpg', '크린부스 외관 시공')">
-                    <img src="images/작업4.jpg" alt="크린부스 외관">
+                <!-- 시스템실링 (SystemCeiling) -->
+                <div class="portfolio-item" data-category="ceiling" onclick="openLightbox('images/SystemCeiling/KakaoTalk_20251221_190018706.jpg', '시스템실링 시공')">
+                    <img src="images/SystemCeiling/KakaoTalk_20251221_190018706.jpg" alt="시스템실링">
                     <div class="portfolio-overlay">
-                        <h4>크린부스 외관</h4>
-                        <p>투명 비닐 + 하부 패널 타입</p>
+                        <h4>시스템실링</h4>
+                        <p>천장 실링 시공</p>
                     </div>
                 </div>
-                
-                <div class="portfolio-item" data-category="cleanroom" onclick="openLightbox('images/작업5.jpg', '크린부스 내부 시공')">
-                    <img src="images/작업5.jpg" alt="크린부스 내부">
+                <div class="portfolio-item" data-category="ceiling" onclick="openLightbox('images/SystemCeiling/KakaoTalk_20251221_190018706_01.jpg', '시스템실링 시공')">
+                    <img src="images/SystemCeiling/KakaoTalk_20251221_190018706_01.jpg" alt="시스템실링">
                     <div class="portfolio-overlay">
-                        <h4>크린부스 내부</h4>
-                        <p>시스템실링 포함 시공</p>
+                        <h4>시스템실링</h4>
+                        <p>천장 실링 시공</p>
                     </div>
                 </div>
-                
-                <div class="portfolio-item" data-category="cleanroom" onclick="openLightbox('images/작업6.jpg', '독립형 크린부스 시공')">
-                    <img src="images/작업6.jpg" alt="독립형 크린부스">
+                <div class="portfolio-item" data-category="ceiling" onclick="openLightbox('images/SystemCeiling/KakaoTalk_20251221_190018706_02.jpg', '시스템실링 시공')">
+                    <img src="images/SystemCeiling/KakaoTalk_20251221_190018706_02.jpg" alt="시스템실링">
                     <div class="portfolio-overlay">
-                        <h4>독립형 크린부스</h4>
-                        <p>전면 투명 패널 타입</p>
+                        <h4>시스템실링</h4>
+                        <p>천장 실링 시공</p>
                     </div>
                 </div>
-                
-                <div class="portfolio-item" data-category="cleanroom" onclick="openLightbox('images/작업7.jpg', '비닐커튼형 크린부스')">
-                    <img src="images/작업7.jpg" alt="비닐커튼형 크린부스">
+
+                <!-- 크린부스 (CleanBooth) -->
+                <div class="portfolio-item" data-category="cleanroom" onclick="openLightbox('images/CleanBooth/KakaoTalk_20251221_190041893.jpg', '크린부스 시공')">
+                    <img src="images/CleanBooth/KakaoTalk_20251221_190041893.jpg" alt="크린부스">
                     <div class="portfolio-overlay">
-                        <h4>비닐커튼형 크린부스</h4>
-                        <p>생산라인 적용</p>
+                        <h4>크린부스</h4>
+                        <p>크린부스 시공</p>
                     </div>
                 </div>
-                
-                <div class="portfolio-item" data-category="cleanroom" onclick="openLightbox('images/작업1.jpg', '클린룸 완성')">
-                    <img src="images/작업1.jpg" alt="클린룸 완성">
+                <div class="portfolio-item" data-category="cleanroom" onclick="openLightbox('images/CleanBooth/KakaoTalk_20251221_190041893_01.jpg', '크린부스 시공')">
+                    <img src="images/CleanBooth/KakaoTalk_20251221_190041893_01.jpg" alt="크린부스">
                     <div class="portfolio-overlay">
-                        <h4>클린룸 완성</h4>
-                        <p>장비 설치 완료 현장</p>
+                        <h4>크린부스</h4>
+                        <p>크린부스 시공</p>
                     </div>
                 </div>
-                
-                <div class="portfolio-item" data-category="ceiling" onclick="openLightbox('images/작업2.jpg', 'FFU 천장 설치')">
-                    <img src="images/작업2.jpg" alt="FFU 설치">
+                <div class="portfolio-item" data-category="cleanroom" onclick="openLightbox('images/CleanBooth/KakaoTalk_20251221_190041893_02.jpg', '크린부스 시공')">
+                    <img src="images/CleanBooth/KakaoTalk_20251221_190041893_02.jpg" alt="크린부스">
                     <div class="portfolio-overlay">
-                        <h4>FFU 천장 설치</h4>
-                        <p>대규모 팬필터유닛 설치</p>
+                        <h4>크린부스</h4>
+                        <p>크린부스 시공</p>
                     </div>
                 </div>
-                
-                <div class="portfolio-item" data-category="ceiling" onclick="openLightbox('images/작업3.jpg', 'FFU 대규모 설치')">
-                    <img src="images/작업3.jpg" alt="FFU 대규모 설치">
+                <div class="portfolio-item" data-category="cleanroom" onclick="openLightbox('images/CleanBooth/KakaoTalk_20251221_190041893_03.jpg', '크린부스 시공')">
+                    <img src="images/CleanBooth/KakaoTalk_20251221_190041893_03.jpg" alt="크린부스">
                     <div class="portfolio-overlay">
-                        <h4>FFU 대규모 설치</h4>
-                        <p>산업현장 적용</p>
+                        <h4>크린부스</h4>
+                        <p>크린부스 시공</p>
                     </div>
                 </div>
-                
-                <div class="portfolio-item" data-category="ceiling" onclick="openLightbox('images/작업8.jpg', '시스템실링 마감')">
-                    <img src="images/작업8.jpg" alt="시스템실링 마감">
+                <div class="portfolio-item" data-category="cleanroom" onclick="openLightbox('images/CleanBooth/KakaoTalk_20251221_190041893_04.jpg', '크린부스 시공')">
+                    <img src="images/CleanBooth/KakaoTalk_20251221_190041893_04.jpg" alt="크린부스">
                     <div class="portfolio-overlay">
-                        <h4>시스템실링 마감</h4>
-                        <p>FFU 설치부 천장 마감</p>
+                        <h4>크린부스</h4>
+                        <p>크린부스 시공</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="cleanroom" onclick="openLightbox('images/CleanBooth/KakaoTalk_20251221_190041893_05.jpg', '크린부스 시공')">
+                    <img src="images/CleanBooth/KakaoTalk_20251221_190041893_05.jpg" alt="크린부스">
+                    <div class="portfolio-overlay">
+                        <h4>크린부스</h4>
+                        <p>크린부스 시공</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="cleanroom" onclick="openLightbox('images/CleanBooth/KakaoTalk_20251221_190041893_06.jpg', '크린부스 시공')">
+                    <img src="images/CleanBooth/KakaoTalk_20251221_190041893_06.jpg" alt="크린부스">
+                    <div class="portfolio-overlay">
+                        <h4>크린부스</h4>
+                        <p>크린부스 시공</p>
+                    </div>
+                </div>
+
+                <!-- 판넬타입 (Pannel) -->
+                <div class="portfolio-item" data-category="pannel" onclick="openLightbox('images/Pannel/KakaoTalk_20251221_190104240.jpg', '판넬타입 시공')">
+                    <img src="images/Pannel/KakaoTalk_20251221_190104240.jpg" alt="판넬타입">
+                    <div class="portfolio-overlay">
+                        <h4>판넬타입</h4>
+                        <p>판넬타입 시공</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="pannel" onclick="openLightbox('images/Pannel/KakaoTalk_20251221_190104240_01.jpg', '판넬타입 시공')">
+                    <img src="images/Pannel/KakaoTalk_20251221_190104240_01.jpg" alt="판넬타입">
+                    <div class="portfolio-overlay">
+                        <h4>판넬타입</h4>
+                        <p>판넬타입 시공</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="pannel" onclick="openLightbox('images/Pannel/KakaoTalk_20251221_190104240_02.jpg', '판넬타입 시공')">
+                    <img src="images/Pannel/KakaoTalk_20251221_190104240_02.jpg" alt="판넬타입">
+                    <div class="portfolio-overlay">
+                        <h4>판넬타입</h4>
+                        <p>판넬타입 시공</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="pannel" onclick="openLightbox('images/Pannel/KakaoTalk_20251221_190104240_03.jpg', '판넬타입 시공')">
+                    <img src="images/Pannel/KakaoTalk_20251221_190104240_03.jpg" alt="판넬타입">
+                    <div class="portfolio-overlay">
+                        <h4>판넬타입</h4>
+                        <p>판넬타입 시공</p>
+                    </div>
+                </div>
+
+                <!-- 커튼설치 (Curtain) -->
+                <div class="portfolio-item" data-category="curtain" onclick="openLightbox('images/Curtain/KakaoTalk_20251221_190120885.jpg', '커튼설치 시공')">
+                    <img src="images/Curtain/KakaoTalk_20251221_190120885.jpg" alt="커튼설치">
+                    <div class="portfolio-overlay">
+                        <h4>커튼설치</h4>
+                        <p>커튼 시공</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="curtain" onclick="openLightbox('images/Curtain/KakaoTalk_20251221_190120885_01.jpg', '커튼설치 시공')">
+                    <img src="images/Curtain/KakaoTalk_20251221_190120885_01.jpg" alt="커튼설치">
+                    <div class="portfolio-overlay">
+                        <h4>커튼설치</h4>
+                        <p>커튼 시공</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="curtain" onclick="openLightbox('images/Curtain/KakaoTalk_20251221_190120885_02.jpg', '커튼설치 시공')">
+                    <img src="images/Curtain/KakaoTalk_20251221_190120885_02.jpg" alt="커튼설치">
+                    <div class="portfolio-overlay">
+                        <h4>커튼설치</h4>
+                        <p>커튼 시공</p>
+                    </div>
+                </div>
+
+                <!-- 파티션 (Partition) -->
+                <div class="portfolio-item" data-category="partition" onclick="openLightbox('images/Partition/KakaoTalk_20251221_190138994.jpg', '파티션 시공')">
+                    <img src="images/Partition/KakaoTalk_20251221_190138994.jpg" alt="파티션">
+                    <div class="portfolio-overlay">
+                        <h4>파티션</h4>
+                        <p>파티션 시공</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="partition" onclick="openLightbox('images/Partition/KakaoTalk_20251221_190138994_01.jpg', '파티션 시공')">
+                    <img src="images/Partition/KakaoTalk_20251221_190138994_01.jpg" alt="파티션">
+                    <div class="portfolio-overlay">
+                        <h4>파티션</h4>
+                        <p>파티션 시공</p>
+                    </div>
+                </div>
+                <div class="portfolio-item" data-category="partition" onclick="openLightbox('images/Partition/KakaoTalk_20251221_190138994_02.jpg', '파티션 시공')">
+                    <img src="images/Partition/KakaoTalk_20251221_190138994_02.jpg" alt="파티션">
+                    <div class="portfolio-overlay">
+                        <h4>파티션</h4>
+                        <p>파티션 시공</p>
                     </div>
                 </div>
             </div>
@@ -1258,19 +1413,16 @@
                             </div>
                             <div class="contact-item-content">
                                 <h4>설립일</h4>
-                                <p>2017년 12월 (8년차)</p>
+                                <p>2018년 1월 1일</p>
                             </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="contact-map">
-                    <iframe
-                        src="https://www.google.com/maps?q=경기+안성시+공도읍+대신두길+145-20&output=embed"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
+                    <a href="https://map.kakao.com/?q=경기도 안성시 오름이엔지" target="_blank" style="display:block;width:100%;height:100%;">
+                        <img src="https://staticmap.kakao.com/map/mapservice?FORMAT=PNG&SCALE=2&MX=546003&MY=971356&S=0&IW=800&IH=400&LANG=0&COORDSTM=WCONGNAMUL&logo=kakao_logo&CX=546003&CY=971356&LEVEL=3&MARKERS=type,default2_b,546003,971356" alt="오름이엔지 위치 지도" style="width:100%;height:100%;object-fit:cover;">
+                    </a>
                 </div>
             </div>
         </div>
@@ -1282,10 +1434,9 @@
             <div class="footer-top">
                 <div>
                     <div class="footer-logo">
-                        <img src="images/로고.png" alt="오름이엔지 로고">
-                        오름이엔지
+                        <img src="images/oreumeng_logo.svg" alt="오름이엔지">
                     </div>
-                    <p class="footer-desc">시스템실링 · 크린부스 전문 시공업체<br>클린환경이 필요한 곳, 오름이엔지가 함께합니다.</p>
+                    <p class="footer-desc">시스템실링 · 크린부스 전문 시공업체<br>크린룸이 필요한 곳, 오름이엔지가 함께합니다.</p>
                 </div>
                 <div class="footer-links">
                     <a href="#home">홈</a>
@@ -1296,7 +1447,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2017-2025 오름이엔지. All rights reserved.</p>
+                <p>© 2018-2025 오름이엔지. All rights reserved.</p>
                 <p>대표: 심지은 | 사업자등록번호: 450-05-00966</p>
             </div>
         </div>
@@ -1380,6 +1531,12 @@
             }
         });
 
+        // Calculate experience years (started in 2005)
+        const startYear = 2005;
+        const currentYear = new Date().getFullYear();
+        const experienceYears = currentYear - startYear;
+        document.getElementById('experience-years').textContent = experienceYears + '년+';
+
         // Smooth scroll for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
@@ -1408,5 +1565,6 @@
             }
         });
     </script>
+
 </body>
 </html>
