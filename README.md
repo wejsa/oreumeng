@@ -27,6 +27,7 @@ oruemeng/
 ├── README.md               # 프로젝트 문서
 └── images/
     ├── oreumeng_logo.svg   # 회사 로고
+    ├── AboutUs/            # About Us 섹션 이미지
     ├── CleanBooth/         # 크린부스 시공사례 (7장)
     ├── Curtain/            # 커튼설치 시공사례 (3장)
     ├── Pannel/             # 판넬타입 시공사례 (4장)
