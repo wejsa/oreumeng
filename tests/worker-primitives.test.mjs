@@ -47,3 +47,21 @@ test("Access JWT가 없는 Worker 요청을 차단한다", async () => {
     message: "로그인이 필요합니다.",
   });
 });
+
+test("관리자 사진은 인증된 Worker 경로로 표시하고 입력 클릭 시 재렌더링하지 않는다", async () => {
+  const adminSource = await readFile(
+    new URL("../worker/public/admin.js", import.meta.url),
+    "utf8",
+  );
+  const workerSource = await readFile(
+    new URL("../worker/src/index.js", import.meta.url),
+    "utf8",
+  );
+
+  assert.match(adminSource, /return `\/api\/image\?\$\{params\}`/);
+  assert.match(
+    adminSource,
+    /if \(!caseAction && !\(imageElement && imageAction\)\) return;/,
+  );
+  assert.match(workerSource, /url\.pathname === "\/api\/image"/);
+});

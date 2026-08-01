@@ -128,6 +128,28 @@ const contentResponse = async (github) => {
   });
 };
 
+const imageResponse = async (url, github) => {
+  const imagePath = url.searchParams.get("path") || "";
+  const requestedRef = url.searchParams.get("ref") || "";
+  if (!allowedPath(imagePath)) {
+    return fail(422, "invalid-image-path", "허용되지 않은 이미지 경로입니다.");
+  }
+  if (requestedRef && !/^[0-9a-f]{40}$/.test(requestedRef)) {
+    return fail(422, "invalid-image-ref", "이미지 버전이 올바르지 않습니다.");
+  }
+
+  const file = await github.getFile(imagePath, requestedRef || github.branch);
+  return new Response(file.bytes, {
+    headers: {
+      "Content-Type": "image/webp",
+      "Cache-Control": requestedRef
+        ? "private, max-age=31536000, immutable"
+        : "private, max-age=300",
+      "X-Content-Type-Options": "nosniff",
+    },
+  });
+};
+
 const uploadImage = async (request, env, github, identity) => {
   const type = request.headers.get("Content-Type") || "";
   if (!/^multipart\/form-data;\s*boundary=/i.test(type)) {
@@ -405,6 +427,9 @@ const handleApi = async (request, env, identity) => {
   const url = new URL(request.url);
   if (request.method === "GET" && url.pathname === "/api/content") {
     return contentResponse(github);
+  }
+  if (request.method === "GET" && url.pathname === "/api/image") {
+    return imageResponse(url, github);
   }
   if (request.method === "POST" && url.pathname === "/api/images") {
     assertMutationRequest(request);

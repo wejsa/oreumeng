@@ -96,10 +96,9 @@ const normalizeOrders = (items) => {
 
 const imageUrl = (path) => {
   if (state.previewUrls.has(path)) return state.previewUrls.get(path);
-  const base = state.content.site.siteUrl.endsWith("/")
-    ? state.content.site.siteUrl
-    : `${state.content.site.siteUrl}/`;
-  return new URL(path, base).href;
+  const params = new URLSearchParams({ path });
+  if (state.baseCommit) params.set("ref", state.baseCommit);
+  return `/api/image?${params}`;
 };
 
 const bindStaticFields = () => {
@@ -555,6 +554,13 @@ $("#cases-list").addEventListener("click", async (event) => {
   const cases = state.content.portfolio.cases;
   const item = cases[caseIndex];
   const caseAction = event.target.closest("[data-case-action]")?.dataset.caseAction;
+  const imageElement = event.target.closest("[data-image-index]");
+  const imageAction = event.target.closest("[data-image-action]")?.dataset.imageAction;
+
+  // 입력칸이나 월 선택기를 클릭했을 때 카드를 다시 만들면 포커스와
+  // 브라우저 기본 선택기가 즉시 사라진다. 실제 동작 버튼일 때만 렌더링한다.
+  if (!caseAction && !(imageElement && imageAction)) return;
+
   if (caseAction === "up") swap(cases, caseIndex, caseIndex - 1);
   if (caseAction === "down") swap(cases, caseIndex, caseIndex + 1);
   if (caseAction === "delete") {
@@ -568,8 +574,6 @@ $("#cases-list").addEventListener("click", async (event) => {
     normalizeOrders(cases);
     markDirty();
   }
-  const imageElement = event.target.closest("[data-image-index]");
-  const imageAction = event.target.closest("[data-image-action]")?.dataset.imageAction;
   if (imageElement && imageAction) {
     const imageIndex = Number(imageElement.dataset.imageIndex);
     if (imageAction === "up") swap(item.images, imageIndex, imageIndex - 1);
