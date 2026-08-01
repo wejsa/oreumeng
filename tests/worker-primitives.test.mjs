@@ -115,8 +115,7 @@ test("관리자 헤더에 오름이엔지 CI를 표시한다", async () => {
   assert.doesNotMatch(adminHtml, />OREUM ENG CMS</);
   assert.doesNotMatch(adminCss, /\.admin-brand img\s*\{[^}]*filter:/s);
   assert.match(adminCss, /\.topbar\s*\{[^}]*background:\s*white/s);
-  assert.match(adminHtml, /<section class="admin-hero"/);
-  assert.match(adminCss, /\.admin-hero\s*\{[^}]*background:\s*linear-gradient/s);
+  assert.doesNotMatch(adminHtml, /class="admin-hero"/);
 });
 
 test("화면에 표시하지 않는 시공 월은 관리자에서 입력받지 않는다", async () => {
@@ -140,4 +139,14 @@ test("현장 기본 정보는 이름, 시공 분야, 홈페이지 등록 순으�
   assert.match(adminSource, /class="card-grid case-summary-grid"/);
   assert.match(adminSource, /현장명[\s\S]*시공 분야[\s\S]*홈페이지 등록[\s\S]*현장 설명/);
   assert.match(adminCss, /\.case-summary-grid\s*\{[^}]*grid-template-columns:/s);
+});
+
+test("관리자 헤더는 흰색 한 줄에 CI, 제목, 상태, 작업 버튼 순으로 배치한다", async () => {
+  const [adminHtml, adminCss] = await Promise.all([
+    readFile(new URL("../worker/public/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../worker/public/admin.css", import.meta.url), "utf8"),
+  ]);
+  assert.match(adminHtml, /class="topbar"[\s\S]*class="admin-brand"[\s\S]*<h1>홈페이지 관리<\/h1>[\s\S]*저장된 상태[\s\S]*마지막 변경 되돌리기[\s\S]*변경사항 저장[\s\S]*<\/header>/);
+  assert.doesNotMatch(adminHtml, /class="admin-hero"/);
+  assert.match(adminCss, /\.topbar\s*\{[^}]*background:\s*white/s);
 });
