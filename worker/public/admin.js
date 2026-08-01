@@ -8,6 +8,7 @@ const state = {
   busy: false,
   deploymentExpected: false,
   deploymentPollToken: 0,
+  skipUnloadWarning: false,
 };
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -183,7 +184,8 @@ const setBusy = (busy, label = "변경사항 저장") => {
   state.busy = busy;
   $("#save-button").textContent = busy ? label : "변경사항 저장";
   $("#save-button").disabled = busy || !state.dirty;
-  $("#revert-button").disabled = busy || !state.latestCmsCommit;
+  const revertButton = $("#revert-button");
+  if (revertButton) revertButton.disabled = busy || !state.latestCmsCommit;
 };
 
 const normalizeOrders = (items) => {
@@ -319,11 +321,16 @@ const render = () => {
   renderCases();
 };
 
-const confirmAction = (title, message) =>
+const confirmAction = (title, message, { danger = true, confirmLabel = "확인" } = {}) =>
   new Promise((resolve) => {
     const dialog = $("#confirm-dialog");
+    const submit = $("#confirm-submit");
     $("#confirm-title").textContent = title;
     $("#confirm-message").textContent = message;
+    submit.textContent = confirmLabel;
+    submit.classList.toggle("danger", danger);
+    submit.classList.toggle("primary", !danger);
+    dialog.returnValue = "";
     dialog.addEventListener("close", () => resolve(dialog.returnValue === "confirm"), { once: true });
     dialog.showModal();
   });
@@ -523,7 +530,8 @@ const save = async () => {
     state.latestCmsCommit = result.commit;
     state.stagedImages = [];
     markClean();
-    $("#revert-button").disabled = false;
+    const revertButton = $("#revert-button");
+    if (revertButton) revertButton.disabled = false;
     void trackDeployment(result.commit, result.deploymentExpected);
     const message = "저장이 완료되었습니다.";
     showNotice(message);
@@ -598,7 +606,8 @@ const loadContent = async () => {
     $$(".tab-panel").forEach((panel) => {
       panel.hidden = panel.dataset.panel !== "about";
     });
-    $("#revert-button").disabled = !state.latestCmsCommit;
+    const revertButton = $("#revert-button");
+    if (revertButton) revertButton.disabled = !state.latestCmsCommit;
   } catch (error) {
     $("#loading").textContent = errorMessage(error);
     showNotice("콘텐츠를 불러오지 못했습니다. Access 및 GitHub 설정을 확인해 주세요.", true);
@@ -772,10 +781,31 @@ $("#add-case").addEventListener("click", () => {
   $("#cases-list .editor-card:last-child")?.scrollIntoView({ behavior: "smooth", block: "start" });
 });
 
-$("#save-button").addEventListener("click", () => save().catch((error) => showNotice(errorMessage(error), true)));
-$("#revert-button").addEventListener("click", revertLatest);
+$("#save-button").addEventListener("click", async () => {
+  const confirmed = await confirmAction(
+    "변경사항 저장",
+    "현재 변경사항을 저장하고 홈페이지에 반영할까요?",
+    { danger: false, confirmLabel: "저장" },
+  );
+  if (!confirmed) return;
+  await save().catch((error) => showNotice(errorMessage(error), true));
+});
+
+$("#logout-button").addEventListener("click", async (event) => {
+  event.preventDefault();
+  const logoutUrl = event.currentTarget.href;
+  const message = state.dirty
+    ? "저장하지 않은 변경사항이 있습니다. 변경사항을 버리고 로그아웃할까요?"
+    : "관리자 화면에서 로그아웃할까요?";
+  const confirmed = await confirmAction("로그아웃", message, { confirmLabel: "로그아웃" });
+  if (!confirmed) return;
+  state.skipUnloadWarning = true;
+  window.location.assign(logoutUrl);
+});
+
+$("#revert-button")?.addEventListener("click", revertLatest);
 window.addEventListener("beforeunload", (event) => {
-  if (!state.dirty) return;
+  if (!state.dirty || state.skipUnloadWarning) return;
   event.preventDefault();
   event.returnValue = "";
 });

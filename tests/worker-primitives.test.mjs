@@ -155,12 +155,12 @@ test("현장 기본 정보는 직접 입력하는 시공 분야와 홈페이지 
   assert.match(adminCss, /\.case-summary-grid\s*\{[^}]*grid-template-columns:/s);
 });
 
-test("관리자 헤더는 흰색 한 줄에 CI, 제목, 상태, 작업 버튼 순으로 배치한다", async () => {
+test("관리자 헤더는 흰색 한 줄에 CI, 제목, 상태, 저장 및 로그아웃 버튼 순으로 배치한다", async () => {
   const [adminHtml, adminCss] = await Promise.all([
     readFile(new URL("../worker/public/index.html", import.meta.url), "utf8"),
     readFile(new URL("../worker/public/admin.css", import.meta.url), "utf8"),
   ]);
-  assert.match(adminHtml, /class="topbar"[\s\S]*class="admin-brand"[\s\S]*<h1>홈페이지 관리<\/h1>[\s\S]*저장된 상태[\s\S]*마지막 변경 되돌리기[\s\S]*변경사항 저장[\s\S]*<\/header>/);
+  assert.match(adminHtml, /class="topbar"[\s\S]*class="admin-brand"[\s\S]*<h1>홈페이지 관리<\/h1>[\s\S]*저장된 상태[\s\S]*변경사항 저장[\s\S]*로그아웃[\s\S]*<\/header>/);
   assert.doesNotMatch(adminHtml, /class="admin-hero"/);
   assert.match(adminCss, /\.topbar\s*\{[^}]*background:\s*white/s);
 });
@@ -173,8 +173,24 @@ test("관리자 새로고침 시 최근 CMS 배포 상태를 복원한다", asyn
 });
 
 test("관리자 헤더에서 Cloudflare Access 로그아웃을 제공한다", async () => {
-  const adminHtml = await readFile(new URL("../worker/public/index.html", import.meta.url), "utf8");
-  assert.match(adminHtml, /href="\/cdn-cgi\/access\/logout"[^>]*>로그아웃<\/a>/);
+  const [adminHtml, adminSource] = await Promise.all([
+    readFile(new URL("../worker/public/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../worker/public/admin.js", import.meta.url), "utf8"),
+  ]);
+  assert.match(adminHtml, /id="logout-button"[^>]*href="\/cdn-cgi\/access\/logout"[^>]*>로그아웃<\/a>/);
+  assert.match(adminSource, /confirmAction\("로그아웃", message/);
+  assert.match(adminSource, /저장하지 않은 변경사항이 있습니다/);
+});
+
+test("저장 전에 확인 팝업을 표시하고 되돌리기 버튼은 숨긴다", async () => {
+  const [adminHtml, adminSource] = await Promise.all([
+    readFile(new URL("../worker/public/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../worker/public/admin.js", import.meta.url), "utf8"),
+  ]);
+  assert.doesNotMatch(adminHtml, /id="revert-button"/);
+  assert.match(adminSource, /현재 변경사항을 저장하고 홈페이지에 반영할까요/);
+  assert.match(adminSource, /confirmLabel: "저장"/);
+  assert.match(adminSource, /\$\("#revert-button"\)\?\.addEventListener/);
 });
 
 test("미사용 회사소개 대체 텍스트와 현장 설명을 입력받지 않는다", async () => {
