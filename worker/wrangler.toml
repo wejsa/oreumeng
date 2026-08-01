@@ -1,0 +1,24 @@
+name = "oreumeng-admin"
+main = "src/index.js"
+compatibility_date = "2026-07-26"
+compatibility_flags = ["nodejs_compat"]
+workers_dev = true
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+
+[vars]
+ACCESS_ISSUER = "https://plain-dew-eb37.cloudflareaccess.com"
+ACCESS_AUD = "249ddec5706045c5785c1154a27c1ac15d2518c008a3ca1fa33af3214780c776"
+ALLOWED_EMAILS = "jaeseong.sim85@gmail.com"
+
+GH_OWNER = "wejsa"
+GH_REPO = "oreumeng"
+GH_BRANCH = "develop-codex"
+
+# 다음 값은 파일에 기록하지 않고 wrangler secret으로만 설정합니다.
+# wrangler secret put GITHUB_TOKEN
+# wrangler secret put UPLOAD_RECEIPT_SECRET
+

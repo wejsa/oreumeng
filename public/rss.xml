@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>오름이엔지 - 시스템실링 · 크린부스 전문 시공</title>
+    <link>https://oreumeng.co.kr/</link>
+    <description>시스템실링, 크린부스, FFU 설치 전문 시공업체 오름이엔지입니다. 반도체, 전자, 연구시설 등 클린환경 맞춤 시공.</description>
+    <language>ko</language>
+    <lastBuildDate>Wed, 25 Dec 2025 00:00:00 +0900</lastBuildDate>
+    <atom:link href="https://oreumeng.co.kr/rss.xml" rel="self" type="application/rss+xml"/>
+    <item>
+      <title>오름이엔지 홈페이지</title>
+      <link>https://oreumeng.co.kr/</link>
+      <description>시스템실링, 크린부스, 판넬타입 FFU, 커튼설치, 파티션 전문 시공업체. 경기도 안성 소재, 20년+ 시공 경력.</description>
+      <pubDate>Wed, 25 Dec 2025 00:00:00 +0900</pubDate>
+      <guid>https://oreumeng.co.kr/</guid>
+    </item>
+  </channel>
+</rss>

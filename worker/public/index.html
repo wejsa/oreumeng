@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>오름이엔지 홈페이지 관리</title>
+    <link rel="stylesheet" href="/admin.css">
+    <script src="/admin.js" type="module"></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">OREUM ENG CMS</p>
+        <h1>홈페이지 관리</h1>
+      </div>
+      <div class="top-actions">
+        <span id="dirty-indicator" class="status muted">저장된 상태</span>
+        <button id="revert-button" class="button ghost" type="button" disabled>마지막 변경 되돌리기</button>
+        <button id="save-button" class="button primary" type="button" disabled>변경사항 저장</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <nav class="tabs" aria-label="관리 영역">
+        <button class="tab active" data-tab="about" type="button">회사소개</button>
+        <button class="tab" data-tab="services" type="button">서비스</button>
+        <button class="tab" data-tab="portfolio" type="button">포트폴리오</button>
+      </nav>
+
+      <div id="notice" class="notice" hidden role="status"></div>
+      <div id="loading" class="loading">콘텐츠를 불러오는 중입니다…</div>
+
+      <section id="about-panel" class="panel tab-panel" data-panel="about" hidden>
+        <div class="panel-heading">
+          <div><p class="eyebrow">ABOUT US</p><h2>회사소개 편집</h2></div>
+        </div>
+        <div class="form-grid">
+          <label>배지 문구<input data-bind="about.badge" maxlength="40"></label>
+          <label class="wide">제목<input data-bind="about.heading" maxlength="120"></label>
+          <label class="wide">본문 (문단은 빈 줄로 구분)<textarea id="about-paragraphs" rows="8"></textarea></label>
+          <fieldset class="wide stats-fields">
+            <legend>통계 정보</legend>
+            <label>첫 번째 값<input data-bind="about.stats.0.value" maxlength="20"></label>
+            <label>첫 번째 라벨<input data-bind="about.stats.0.label" maxlength="40"></label>
+            <label>경력 시작 연도<input data-bind="about.stats.1.value" type="number" min="1900" max="2100"></label>
+            <label>두 번째 라벨<input data-bind="about.stats.1.label" maxlength="40"></label>
+          </fieldset>
+          <div class="wide media-field">
+            <div>
+              <span class="label-text">회사소개 사진</span>
+              <img id="about-preview" class="about-preview" alt="">
+            </div>
+            <div>
+              <label>대체 텍스트<input data-bind="about.imageAlt" maxlength="160"></label>
+              <label class="upload-button">사진 교체<input id="about-image-input" type="file" accept="image/jpeg,image/png,image/webp" hidden></label>
+              <p class="help">자동으로 긴 변 1920px 이하 WebP로 변환합니다.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="services-panel" class="panel tab-panel" data-panel="services" hidden>
+        <div class="panel-heading">
+          <div><p class="eyebrow">SERVICES</p><h2>서비스 관리</h2></div>
+          <button id="add-service" class="button" type="button">서비스 추가</button>
+        </div>
+        <div class="form-grid section-meta">
+          <label>영역 제목<input data-bind="services.sectionTitle" maxlength="80"></label>
+          <label class="wide">영역 설명<textarea data-bind="services.sectionDesc" rows="3" maxlength="240"></textarea></label>
+        </div>
+        <div id="services-list" class="card-list"></div>
+      </section>
+
+      <section id="portfolio-panel" class="panel tab-panel" data-panel="portfolio" hidden>
+        <div class="panel-heading">
+          <div><p class="eyebrow">PORTFOLIO</p><h2>현장 사례 및 사진 관리</h2></div>
+          <button id="add-case" class="button" type="button">현장 추가</button>
+        </div>
+        <div class="form-grid section-meta">
+          <label>영역 제목<input data-bind="portfolio.sectionTitle" maxlength="80"></label>
+          <label class="wide">영역 설명<textarea data-bind="portfolio.sectionDesc" rows="3" maxlength="240"></textarea></label>
+        </div>
+        <div id="cases-list" class="case-list"></div>
+      </section>
+    </main>
+
+    <dialog id="confirm-dialog">
+      <form method="dialog">
+        <h2 id="confirm-title">확인</h2>
+        <p id="confirm-message"></p>
+        <div class="dialog-actions">
+          <button value="cancel" class="button ghost">취소</button>
+          <button value="confirm" class="button danger">확인</button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>

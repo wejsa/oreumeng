@@ -1,0 +1,15 @@
+{
+  "name": "오름이엔지",
+  "siteUrl": "https://oreumeng.co.kr/",
+  "telephone": "010-4813-8280",
+  "email": "autocad@paran.com",
+  "address": {
+    "streetAddress": "공도읍 대신두길 145-20",
+    "addressLocality": "안성시",
+    "addressRegion": "경기도",
+    "addressCountry": "KR"
+  },
+  "foundingDate": "2018-01-01",
+  "experienceSinceYear": 2005,
+  "taxId": "450-05-00966"
+}

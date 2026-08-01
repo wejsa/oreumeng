@@ -1,0 +1,46 @@
+{
+  "sectionTitle": "시공 분야",
+  "sectionDesc": "클린환경 구축에 필요한 모든 시공 서비스를 제공합니다",
+  "items": [
+    {
+      "id": "system-ceiling",
+      "title": "시스템실링",
+      "description": "완벽한 마감으로 오염을 차단하며, FFU를 설치하여 내부에 생성된 파티클을 제거하고 청정도를 유지합니다.",
+      "icon": "grid",
+      "order": 1,
+      "published": true
+    },
+    {
+      "id": "clean-booth",
+      "title": "크린부스",
+      "description": "작업 환경에 맞춘 맞춤형 크린부스 설계 및 시공. 현장 조건을 고려한 최적의 구조로 효율적인 클린 공간을 구축합니다.",
+      "icon": "home",
+      "order": 2,
+      "published": true
+    },
+    {
+      "id": "panel-ffu",
+      "title": "판넬타입 FFU",
+      "description": "고청정도 환경조건이 아닌 곳의 FFU 시공으로서 일반적으로 1000 CLASS의 청정도에 적합합니다.",
+      "icon": "layers",
+      "order": 3,
+      "published": true
+    },
+    {
+      "id": "curtain",
+      "title": "커튼설치",
+      "description": "방진 비닐커튼 및 스트립커튼 설치. 공간 분리와 오염 방지를 위한 경제적이고 효율적인 솔루션을 제공합니다.",
+      "icon": "curtain",
+      "order": 4,
+      "published": true
+    },
+    {
+      "id": "partition",
+      "title": "파티션",
+      "description": "고객 맞춤 작업공간 분리를 위한 프로파일 파티션 설치. 효율적인 공간 활용과 작업 환경 개선을 제공합니다.",
+      "icon": "partition",
+      "order": 5,
+      "published": true
+    }
+  ]
+}

@@ -1,0 +1,268 @@
+{
+  "sectionTitle": "시공 사례",
+  "sectionDesc": "다양한 현장에서 검증된 시공 품질을 확인하세요",
+  "categories": [
+    {
+      "id": "ceiling",
+      "label": "시스템실링",
+      "order": 1
+    },
+    {
+      "id": "cleanroom",
+      "label": "크린부스",
+      "order": 2
+    },
+    {
+      "id": "pannel",
+      "label": "판넬타입",
+      "order": 3
+    },
+    {
+      "id": "curtain",
+      "label": "커튼설치",
+      "order": 4
+    },
+    {
+      "id": "partition",
+      "label": "파티션",
+      "order": 5
+    }
+  ],
+  "cases": [
+    {
+      "id": "01K00000000000000000000001",
+      "title": "시스템실링 시공사례",
+      "categoryId": "ceiling",
+      "description": "시스템실링 및 천장 그리드 시공 사례입니다.",
+      "order": 1,
+      "published": true,
+      "coverImageId": "img_ceiling_01",
+      "images": [
+        {
+          "id": "img_ceiling_01",
+          "file": "images/portfolio/01K00000000000000000000001/img_ceiling_01.webp",
+          "alt": "시스템실링 시공사례 1",
+          "caption": "천장 실링 시공",
+          "width": 1920,
+          "height": 896,
+          "order": 1
+        },
+        {
+          "id": "img_ceiling_02",
+          "file": "images/portfolio/01K00000000000000000000001/img_ceiling_02.webp",
+          "alt": "시스템실링 시공사례 2",
+          "caption": "천장 실링 시공",
+          "width": 1920,
+          "height": 896,
+          "order": 2
+        },
+        {
+          "id": "img_ceiling_03",
+          "file": "images/portfolio/01K00000000000000000000001/img_ceiling_03.webp",
+          "alt": "시스템실링 시공사례 3",
+          "caption": "천장 실링 시공",
+          "width": 1920,
+          "height": 748,
+          "order": 3
+        }
+      ]
+    },
+    {
+      "id": "01K00000000000000000000002",
+      "title": "크린부스 시공사례",
+      "categoryId": "cleanroom",
+      "description": "크린부스 구축 및 내부 시공 사례입니다.",
+      "order": 2,
+      "published": true,
+      "coverImageId": "img_cleanroom_01",
+      "images": [
+        {
+          "id": "img_cleanroom_01",
+          "file": "images/portfolio/01K00000000000000000000002/img_cleanroom_01.webp",
+          "alt": "크린부스 시공사례 1",
+          "caption": "크린부스 시공",
+          "width": 1920,
+          "height": 748,
+          "order": 1
+        },
+        {
+          "id": "img_cleanroom_02",
+          "file": "images/portfolio/01K00000000000000000000002/img_cleanroom_02.webp",
+          "alt": "크린부스 시공사례 2",
+          "caption": "크린부스 시공",
+          "width": 1920,
+          "height": 748,
+          "order": 2
+        },
+        {
+          "id": "img_cleanroom_03",
+          "file": "images/portfolio/01K00000000000000000000002/img_cleanroom_03.webp",
+          "alt": "크린부스 시공사례 3",
+          "caption": "크린부스 시공",
+          "width": 1920,
+          "height": 748,
+          "order": 3
+        },
+        {
+          "id": "img_cleanroom_04",
+          "file": "images/portfolio/01K00000000000000000000002/img_cleanroom_04.webp",
+          "alt": "크린부스 시공사례 4",
+          "caption": "크린부스 시공",
+          "width": 748,
+          "height": 1920,
+          "order": 4
+        },
+        {
+          "id": "img_cleanroom_05",
+          "file": "images/portfolio/01K00000000000000000000002/img_cleanroom_05.webp",
+          "alt": "크린부스 시공사례 5",
+          "caption": "크린부스 시공",
+          "width": 1920,
+          "height": 748,
+          "order": 5
+        },
+        {
+          "id": "img_cleanroom_06",
+          "file": "images/portfolio/01K00000000000000000000002/img_cleanroom_06.webp",
+          "alt": "크린부스 시공사례 6",
+          "caption": "크린부스 시공",
+          "width": 1920,
+          "height": 748,
+          "order": 6
+        },
+        {
+          "id": "img_cleanroom_07",
+          "file": "images/portfolio/01K00000000000000000000002/img_cleanroom_07.webp",
+          "alt": "크린부스 시공사례 7",
+          "caption": "크린부스 시공",
+          "width": 1920,
+          "height": 748,
+          "order": 7
+        }
+      ]
+    },
+    {
+      "id": "01K00000000000000000000003",
+      "title": "판넬타입 시공사례",
+      "categoryId": "pannel",
+      "description": "판넬타입 클린환경 시공 사례입니다.",
+      "order": 3,
+      "published": true,
+      "coverImageId": "img_pannel_01",
+      "images": [
+        {
+          "id": "img_pannel_01",
+          "file": "images/portfolio/01K00000000000000000000003/img_pannel_01.webp",
+          "alt": "판넬타입 시공사례 1",
+          "caption": "판넬타입 시공",
+          "width": 1920,
+          "height": 1081,
+          "order": 1
+        },
+        {
+          "id": "img_pannel_02",
+          "file": "images/portfolio/01K00000000000000000000003/img_pannel_02.webp",
+          "alt": "판넬타입 시공사례 2",
+          "caption": "판넬타입 시공",
+          "width": 1920,
+          "height": 1440,
+          "order": 2
+        },
+        {
+          "id": "img_pannel_03",
+          "file": "images/portfolio/01K00000000000000000000003/img_pannel_03.webp",
+          "alt": "판넬타입 시공사례 3",
+          "caption": "판넬타입 시공",
+          "width": 1440,
+          "height": 1920,
+          "order": 3
+        },
+        {
+          "id": "img_pannel_04",
+          "file": "images/portfolio/01K00000000000000000000003/img_pannel_04.webp",
+          "alt": "판넬타입 시공사례 4",
+          "caption": "판넬타입 시공",
+          "width": 1920,
+          "height": 896,
+          "order": 4
+        }
+      ]
+    },
+    {
+      "id": "01K00000000000000000000004",
+      "title": "커튼설치 시공사례",
+      "categoryId": "curtain",
+      "description": "방진 비닐커튼 및 스트립커튼 설치 사례입니다.",
+      "order": 4,
+      "published": true,
+      "coverImageId": "img_curtain_01",
+      "images": [
+        {
+          "id": "img_curtain_01",
+          "file": "images/portfolio/01K00000000000000000000004/img_curtain_01.webp",
+          "alt": "커튼설치 시공사례 1",
+          "caption": "커튼 설치 시공",
+          "width": 1920,
+          "height": 1920,
+          "order": 1
+        },
+        {
+          "id": "img_curtain_02",
+          "file": "images/portfolio/01K00000000000000000000004/img_curtain_02.webp",
+          "alt": "커튼설치 시공사례 2",
+          "caption": "커튼 설치 시공",
+          "width": 1920,
+          "height": 1920,
+          "order": 2
+        },
+        {
+          "id": "img_curtain_03",
+          "file": "images/portfolio/01K00000000000000000000004/img_curtain_03.webp",
+          "alt": "커튼설치 시공사례 3",
+          "caption": "커튼 설치 시공",
+          "width": 1920,
+          "height": 748,
+          "order": 3
+        }
+      ]
+    },
+    {
+      "id": "01K00000000000000000000005",
+      "title": "파티션 시공사례",
+      "categoryId": "partition",
+      "description": "작업공간 분리를 위한 파티션 시공 사례입니다.",
+      "order": 5,
+      "published": true,
+      "coverImageId": "img_partition_01",
+      "images": [
+        {
+          "id": "img_partition_01",
+          "file": "images/portfolio/01K00000000000000000000005/img_partition_01.webp",
+          "alt": "파티션 시공사례 1",
+          "caption": "파티션 시공",
+          "width": 1920,
+          "height": 1440,
+          "order": 1
+        },
+        {
+          "id": "img_partition_02",
+          "file": "images/portfolio/01K00000000000000000000005/img_partition_02.webp",
+          "alt": "파티션 시공사례 2",
+          "caption": "파티션 시공",
+          "width": 1440,
+          "height": 1920,
+          "order": 2
+        },
+        {
+          "id": "img_partition_03",
+          "file": "images/portfolio/01K00000000000000000000005/img_partition_03.webp",
+          "alt": "파티션 시공사례 3",
+          "caption": "파티션 시공",
+          "width": 1920,
+          "height": 748,
+          "order": 3
+        }
+      ]
+    }
+  ]
+}

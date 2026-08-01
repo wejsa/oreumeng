@@ -1,0 +1,17 @@
+{
+  "name": "oreumeng-admin-worker",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "test": "node --test ../tests/worker-*.test.mjs"
+  },
+  "dependencies": {
+    "jose": "6.1.0"
+  },
+  "devDependencies": {
+    "wrangler": "4.114.0"
+  }
+}
