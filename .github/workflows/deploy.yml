@@ -2,7 +2,7 @@ name: Build and Deploy
 
 on:
   push:
-    branches: [develop-codex]
+    branches: [main]
     paths:
       - "data/**"
       - "images/**"
@@ -25,7 +25,7 @@ concurrency:
 
 jobs:
   build:
-    if: github.ref == 'refs/heads/develop-codex'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
@@ -45,7 +45,7 @@ jobs:
           path: dist
 
   deploy:
-    if: github.ref == 'refs/heads/develop-codex'
+    if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
     environment:

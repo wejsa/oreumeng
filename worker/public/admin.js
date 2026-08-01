@@ -424,8 +424,7 @@ const save = async () => {
     state.stagedImages = [];
     markClean();
     $("#revert-button").disabled = false;
-    showNotice("저장했습니다. 홈페이지 배포 상태를 확인하는 중입니다.");
-    pollDeployment(result.commit);
+    showNotice("develop-codex에 저장했습니다. 운영 홈페이지는 변경되지 않습니다. 로컬 미리보기에서 확인하세요.");
   } catch (error) {
     if (error.status === 409) {
       showNotice("다른 변경이 먼저 저장되었습니다. 페이지를 새로고침한 뒤 다시 시도해 주세요.", true);
@@ -435,26 +434,6 @@ const save = async () => {
   } finally {
     setBusy(false);
   }
-};
-
-const pollDeployment = async (commit) => {
-  for (let attempt = 0; attempt < 36; attempt += 1) {
-    await new Promise((resolve) => setTimeout(resolve, attempt ? 5000 : 1500));
-    try {
-      const result = await api(`/api/status?commit=${encodeURIComponent(commit)}`);
-      if (result.state === "success") {
-        showNotice("홈페이지 배포가 완료되었습니다.");
-        return;
-      }
-      if (result.state === "failure") {
-        showNotice("저장은 완료됐지만 홈페이지 빌드가 실패했습니다. 기존 홈페이지는 그대로 유지됩니다.", true);
-        return;
-      }
-    } catch {
-      return;
-    }
-  }
-  showNotice("저장은 완료됐습니다. 배포는 GitHub Actions에서 계속 진행 중입니다.");
 };
 
 const revertLatest = async () => {
@@ -480,7 +459,7 @@ const revertLatest = async () => {
     });
     showNotice("마지막 변경을 되돌렸습니다. 최신 내용을 다시 불러옵니다.");
     await loadContent();
-    pollDeployment(result.commit);
+    showNotice("되돌리기를 develop-codex에 저장했습니다. 운영 홈페이지는 변경되지 않습니다.");
   } catch (error) {
     showNotice(errorMessage(error), true);
   } finally {
