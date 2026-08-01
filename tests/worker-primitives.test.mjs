@@ -88,8 +88,8 @@ test("관리자 주요 제목과 사진 설명 입력창은 줄바꿈을 지원�
     readFile(new URL("../worker/public/index.html", import.meta.url), "utf8"),
     readFile(new URL("../worker/public/admin.js", import.meta.url), "utf8"),
   ]);
-  assert.match(adminHtml, /<textarea data-bind="services\.sectionTitle"/);
-  assert.match(adminHtml, /<textarea data-bind="portfolio\.sectionTitle"/);
+  assert.match(adminHtml, /<input data-bind="services\.sectionTitle"/);
+  assert.match(adminHtml, /<input data-bind="portfolio\.sectionTitle"/);
   assert.match(adminSource, /<textarea data-service-field="title"/);
   assert.match(adminSource, /<textarea data-image-field="caption"/);
 });

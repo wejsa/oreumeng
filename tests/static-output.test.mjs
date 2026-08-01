@@ -4,7 +4,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { multilineHtml, renderServices } from "../scripts/lib/render.mjs";
+import { multilineHtml, renderPortfolio, renderServices } from "../scripts/lib/render.mjs";
 
 test("화면 표시 텍스트의 Enter를 HTML 줄바꿈으로 변환하고 이스케이프한다", () => {
   assert.equal(
@@ -22,6 +22,40 @@ test("공개 서비스가 없으면 서비스 영역을 생성하지 않는다",
     ],
   };
   assert.equal(renderServices(services), "");
+});
+
+test("비공개 포트폴리오의 카테고리는 홈페이지 탭에서 제외한다", () => {
+  const portfolio = {
+    sectionTitle: "시공 사례",
+    sectionDesc: "시공 사진",
+    categories: [
+      { id: "public", label: "공개 분야", order: 1 },
+      { id: "private", label: "비공개 분야", order: 2 },
+    ],
+    cases: [
+      {
+        id: "PUBLIC01",
+        title: "공개 분야",
+        categoryId: "public",
+        order: 1,
+        published: true,
+        coverImageId: "img_public",
+        images: [{ id: "img_public", file: "images/portfolio/PUBLIC01/img_public.webp", alt: "공개", caption: "공개", width: 100, height: 100, order: 1 }],
+      },
+      {
+        id: "PRIVATE1",
+        title: "비공개 분야",
+        categoryId: "private",
+        order: 2,
+        published: false,
+        coverImageId: "img_private",
+        images: [{ id: "img_private", file: "images/portfolio/PRIVATE1/img_private.webp", alt: "비공개", caption: "비공개", width: 100, height: 100, order: 1 }],
+      },
+    ],
+  };
+  const html = renderPortfolio(portfolio);
+  assert.match(html, />공개 분야<\/button>/);
+  assert.doesNotMatch(html, />비공개 분야<\/button>/);
 });
 
 test("정적 결과물에 핵심 콘텐츠와 SEO 정보가 포함된다", async () => {

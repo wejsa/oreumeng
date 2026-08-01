@@ -98,7 +98,6 @@ export const renderServices = (services) => {
 };
 
 export const renderPortfolio = (portfolio) => {
-  const categories = [...portfolio.categories].sort((a, b) => a.order - b.order);
   const cases = [...portfolio.cases]
     .filter((item) => item.published)
     .sort((a, b) => a.order - b.order)
@@ -106,6 +105,10 @@ export const renderPortfolio = (portfolio) => {
       ...item,
       images: [...item.images].sort((a, b) => a.order - b.order),
     }));
+  const publishedCategoryIds = new Set(cases.map((item) => item.categoryId));
+  const categories = [...portfolio.categories]
+    .filter((category) => publishedCategoryIds.has(category.id))
+    .sort((a, b) => a.order - b.order);
 
   const galleryData = Object.fromEntries(
     cases.map((item) => [

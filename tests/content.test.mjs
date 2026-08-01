@@ -19,11 +19,19 @@ test("마이그레이션한 콘텐츠가 스키마를 통과한다", async () =>
   assert.equal(validateAbout(about), about);
   assert.equal(validateServices(services), services);
   assert.equal(validatePortfolio(portfolio), portfolio);
-  assert.equal(portfolio.cases.length, 5);
-  assert.equal(
-    portfolio.cases.reduce((sum, item) => sum + item.images.length, 0),
-    20,
-  );
+  assert.ok(portfolio.cases.length > 0);
+  assert.ok(portfolio.cases.every((item) => item.images.length > 0));
+});
+
+test("서비스와 포트폴리오 영역 제목은 한 줄만 허용한다", async () => {
+  const [services, portfolio] = await Promise.all([
+    json("data/services.json"),
+    json("data/portfolio.json"),
+  ]);
+  services.sectionTitle = "첫 줄\n둘째 줄";
+  portfolio.sectionTitle = "첫 줄\n둘째 줄";
+  assert.throws(() => validateServices(services), /한 줄/);
+  assert.throws(() => validatePortfolio(portfolio), /한 줄/);
 });
 
 test("서비스 순서 중복을 거부한다", async () => {

@@ -4,6 +4,11 @@ const text = (value, name, max = 500) => {
   }
 };
 
+const singleLine = (value, name, max) => {
+  text(value, name, max);
+  if (/[\r\n]/.test(value)) throw new Error(`${name}: 한 줄로 입력해야 합니다.`);
+};
+
 const unique = (values, name) => {
   if (new Set(values).size !== values.length) {
     throw new Error(`${name}: 중복 값이 있습니다.`);
@@ -77,7 +82,7 @@ export const validateAbout = (about) => {
 };
 
 export const validateServices = (services) => {
-  text(services.sectionTitle, "services.sectionTitle", 80);
+  singleLine(services.sectionTitle, "services.sectionTitle", 80);
   text(services.sectionDesc, "services.sectionDesc", 240);
   if (!Array.isArray(services.items) || services.items.length < 1) {
     throw new Error("services.items: 서비스가 한 개 이상 필요합니다.");
@@ -99,7 +104,7 @@ export const validateServices = (services) => {
 };
 
 export const validatePortfolio = (portfolio) => {
-  text(portfolio.sectionTitle, "portfolio.sectionTitle", 80);
+  singleLine(portfolio.sectionTitle, "portfolio.sectionTitle", 80);
   text(portfolio.sectionDesc, "portfolio.sectionDesc", 240);
   if (!Array.isArray(portfolio.categories) || portfolio.categories.length < 1) {
     throw new Error("portfolio.categories: 카테고리가 필요합니다.");
