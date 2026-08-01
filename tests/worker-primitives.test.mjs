@@ -106,11 +106,13 @@ test("관리자 저장 성공과 실패를 결과 팝업으로 알린다", async
 });
 
 test("관리자 헤더에 오름이엔지 CI를 표시한다", async () => {
-  const adminHtml = await readFile(
-    new URL("../worker/public/index.html", import.meta.url),
-    "utf8",
-  );
+  const [adminHtml, adminCss] = await Promise.all([
+    readFile(new URL("../worker/public/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../worker/public/admin.css", import.meta.url), "utf8"),
+  ]);
   assert.match(adminHtml, /class="admin-brand"/);
   assert.match(adminHtml, /oreumeng_logo\.svg/);
   assert.doesNotMatch(adminHtml, />OREUM ENG CMS</);
+  assert.match(adminCss, /\.admin-brand img\s*\{[^}]*filter:\s*brightness\(0\) invert\(1\)/s);
+  assert.doesNotMatch(adminCss, /\.admin-brand\s*\{[^}]*background:\s*white/s);
 });

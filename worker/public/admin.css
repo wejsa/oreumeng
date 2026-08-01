@@ -29,10 +29,12 @@ h2 { margin-bottom: 0; font-size: 23px; }
 h3 { margin-bottom: 12px; font-size: 18px; }
 .eyebrow { margin-bottom: 4px; color: #71c7a5; font-size: 11px; font-weight: 800; letter-spacing: .14em; }
 .admin-brand {
-  display: inline-flex; align-items: center; margin-bottom: 8px; padding: 5px 9px;
-  border-radius: 8px; background: white;
+  display: inline-flex; align-items: center; margin-bottom: 7px;
 }
-.admin-brand img { display: block; width: 142px; height: auto; }
+.admin-brand img {
+  display: block; width: 142px; height: auto; opacity: .96;
+  filter: brightness(0) invert(1);
+}
 .top-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end; }
 
 .layout { width: min(1180px, calc(100% - 32px)); margin: 26px auto 72px; }

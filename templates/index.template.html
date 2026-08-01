@@ -756,6 +756,35 @@
             opacity: 0.7;
         }
 
+        .footer-primary {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding-left: 12px;
+            border-left: 1px solid rgba(0, 0, 0, 0.22);
+            color: inherit;
+            font-size: 0.82rem;
+            text-decoration: none;
+            transition: color 0.2s, opacity 0.2s;
+        }
+
+        .admin-link svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .admin-link:hover,
+        .admin-link:focus-visible {
+            color: var(--primary);
+            opacity: 1;
+        }
+
         /* Mobile Phone Button (Fixed) */
         .mobile-phone-btn {
             display: none;
@@ -1019,6 +1048,16 @@
             .footer-bottom {
                 flex-direction: column;
                 text-align: center;
+            }
+
+            .footer-primary {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .admin-link {
+                padding-left: 0;
+                border-left: 0;
             }
         }
 
@@ -1516,7 +1555,16 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2018-<span id="footer-year">2025</span> 오름이엔지. All rights reserved.</p>
+                <div class="footer-primary">
+                    <p>© 2018-<span id="footer-year">2025</span> 오름이엔지. All rights reserved.</p>
+                    <a class="admin-link" href="https://oreumeng-admin.oreumeng.workers.dev/" target="_blank" rel="nofollow noopener noreferrer" aria-label="오름이엔지 홈페이지 관리자 새 탭에서 열기">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="5" y="11" width="14" height="10" rx="2"/>
+                            <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+                        </svg>
+                        관리자
+                    </a>
+                </div>
                 <p>대표: 심지은 | 사업자등록번호: 450-05-00966</p>
             </div>
         </div>
