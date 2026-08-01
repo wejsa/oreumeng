@@ -36,4 +36,7 @@ test("정적 결과물에 핵심 콘텐츠와 SEO 정보가 포함된다", async
     /\.services-grid\s*\{[^}]*grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/s,
   );
   assert.doesNotMatch(html, /\.services-grid \.service-card:nth-child/);
+  assert.match(html, /\.lightbox-nav\s*\{[^}]*position:\s*fixed/s);
+  assert.match(html, /class="lightbox-nav lightbox-prev"[\s\S]*?<svg[^>]*>[\s\S]*?<\/svg>/);
+  assert.match(html, /class="lightbox-nav lightbox-next"[\s\S]*?<svg[^>]*>[\s\S]*?<\/svg>/);
 });
