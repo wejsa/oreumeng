@@ -118,3 +118,9 @@ test("관리자 헤더에 오름이엔지 CI를 표시한다", async () => {
   assert.match(adminHtml, /<section class="admin-hero"/);
   assert.match(adminCss, /\.admin-hero\s*\{[^}]*background:\s*linear-gradient/s);
 });
+
+test("화면에 표시하지 않는 시공 월은 관리자에서 입력받지 않는다", async () => {
+  const adminSource = await readFile(new URL("../worker/public/admin.js", import.meta.url), "utf8");
+  assert.doesNotMatch(adminSource, /constructedAt/);
+  assert.doesNotMatch(adminSource, /시공 월/);
+});

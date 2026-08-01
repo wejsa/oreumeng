@@ -130,9 +130,6 @@ export const validatePortfolio = (portfolio) => {
     if (!categoryIds.has(item.categoryId)) {
       throw new Error(`portfolio.cases[${caseIndex}].categoryId: 없는 카테고리입니다.`);
     }
-    if (item.constructedAt && !/^\d{4}-\d{2}$/.test(item.constructedAt)) {
-      throw new Error(`portfolio.cases[${caseIndex}].constructedAt: YYYY-MM 형식이어야 합니다.`);
-    }
     if (typeof item.published !== "boolean") {
       throw new Error(`portfolio.cases[${caseIndex}].published: boolean이 필요합니다.`);
     }
@@ -180,4 +177,3 @@ export const validateAll = ({ site, about, services, portfolio }) => ({
   services: validateServices(services),
   portfolio: validatePortfolio(portfolio),
 });
-

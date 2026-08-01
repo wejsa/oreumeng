@@ -245,7 +245,6 @@ JSON-LD, 메타태그, 연락처에 사용하는 회사 기본정보의 단일 �
       "title": "안성 반도체 부품 공장 클린룸",
       "categoryId": "ceiling",
       "description": "생산라인 확장에 따른 시스템실링 및 FFU 설치. Class 1000 기준 충족.",
-      "constructedAt": "2025-08",
       "order": 1,
       "published": true,
       "coverImageId": "img_7f3a9c",

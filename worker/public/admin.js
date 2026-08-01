@@ -227,7 +227,6 @@ const caseCard = (item, index, total) => {
                 `<option value="${escapeHtml(category.id)}" ${item.categoryId === category.id ? "selected" : ""}>${escapeHtml(category.label)}</option>`).join("")}
             </select>
           </label>
-          <label>시공 월 (선택)<input data-case-field="constructedAt" type="month" value="${escapeHtml(item.constructedAt || "")}"></label>
           <label class="check-label"><input data-case-field="published" type="checkbox" ${item.published ? "checked" : ""}> 홈페이지에 공개</label>
           <label class="wide">현장 설명<textarea data-case-field="description" rows="3" maxlength="600">${escapeHtml(item.description)}</textarea></label>
         </div>
@@ -543,7 +542,6 @@ document.addEventListener("input", (event) => {
   if (caseCardElement && input.dataset.caseField) {
     const item = state.content.portfolio.cases[Number(caseCardElement.dataset.caseIndex)];
     item[input.dataset.caseField] = input.type === "checkbox" ? input.checked : input.value;
-    if (input.dataset.caseField === "constructedAt" && !input.value) delete item.constructedAt;
     if (input.dataset.caseField === "title") $(".card-title strong", caseCardElement).textContent = input.value || "현장명 없음";
     markDirty();
   }
