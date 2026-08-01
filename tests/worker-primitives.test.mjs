@@ -94,3 +94,13 @@ test("관리자 주요 제목과 사진 내용 입력창은 줄바꿈을 지원�
   assert.match(adminSource, /<textarea data-case-field="title"/);
   assert.match(adminSource, /<textarea data-image-field="caption"/);
 });
+
+test("관리자 저장 성공과 실패를 결과 팝업으로 알린다", async () => {
+  const [adminHtml, adminSource] = await Promise.all([
+    readFile(new URL("../worker/public/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../worker/public/admin.js", import.meta.url), "utf8"),
+  ]);
+  assert.match(adminHtml, /<dialog id="result-dialog"/);
+  assert.match(adminSource, /showResultDialog\("저장 완료", message\)/);
+  assert.match(adminSource, /showResultDialog\("저장 실패", message, true\)/);
+});

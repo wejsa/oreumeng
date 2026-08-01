@@ -68,6 +68,16 @@ const showNotice = (message, error = false) => {
   }, error ? 9000 : 5000);
 };
 
+const showResultDialog = (title, message, error = false) => {
+  const dialog = $("#result-dialog");
+  dialog.classList.toggle("success", !error);
+  dialog.classList.toggle("error", error);
+  $("#result-title").textContent = title;
+  $("#result-message").textContent = message;
+  if (dialog.open) dialog.close();
+  dialog.showModal();
+};
+
 const errorMessage = (error) => {
   if (error?.payload?.message) return error.payload.message;
   if (error instanceof TypeError && /fetch/i.test(error.message)) {
@@ -403,9 +413,9 @@ const validateBeforeSave = () => {
 };
 
 const save = async () => {
-  validateBeforeSave();
   setBusy(true, "저장 중…");
   try {
+    validateBeforeSave();
     const result = await api("/api/content", {
       method: "PUT",
       body: JSON.stringify({
@@ -424,13 +434,18 @@ const save = async () => {
     state.stagedImages = [];
     markClean();
     $("#revert-button").disabled = false;
-    showNotice("develop-codex에 저장했습니다. 운영 홈페이지는 변경되지 않습니다. 로컬 미리보기에서 확인하세요.");
+    const message = "develop-codex에 저장했습니다.\n운영 홈페이지는 변경되지 않습니다. 로컬 미리보기에서 확인하세요.";
+    showNotice(message);
+    showResultDialog("저장 완료", message);
   } catch (error) {
+    let message;
     if (error.status === 409) {
-      showNotice("다른 변경이 먼저 저장되었습니다. 페이지를 새로고침한 뒤 다시 시도해 주세요.", true);
+      message = "다른 변경이 먼저 저장되었습니다. 페이지를 새로고침한 뒤 다시 시도해 주세요.";
     } else {
-      showNotice(errorMessage(error), true);
+      message = errorMessage(error);
     }
+    showNotice(message, true);
+    showResultDialog("저장 실패", message, true);
   } finally {
     setBusy(false);
   }
