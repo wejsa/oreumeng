@@ -175,3 +175,8 @@ test("미사용 회사소개 대체 텍스트와 현장 설명을 입력받지 �
   assert.doesNotMatch(adminSource, /data-case-field="description"/);
   assert.doesNotMatch(adminSource, />현장 설명</);
 });
+
+test("관리자 로그인 허용 이메일 두 개를 Worker 설정에 유지한다", async () => {
+  const config = await readFile(new URL("../worker/wrangler.toml", import.meta.url), "utf8");
+  assert.match(config, /ALLOWED_EMAILS\s*=\s*"jaeseong\.sim85@gmail\.com,autocad@paran\.com"/);
+});
