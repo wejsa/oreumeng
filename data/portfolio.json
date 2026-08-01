@@ -191,8 +191,17 @@
       "categoryId": "field-msads404-ot8",
       "order": 4,
       "published": true,
-      "coverImageId": "img_curtain_01",
+      "coverImageId": "img_curtain_03",
       "images": [
+        {
+          "id": "img_curtain_03",
+          "file": "images/portfolio/01K00000000000000000000004/img_curtain_03.webp",
+          "alt": "커튼 설치 시공",
+          "caption": "커튼 설치 시공",
+          "width": 1920,
+          "height": 748,
+          "order": 1
+        },
         {
           "id": "img_curtain_01",
           "file": "images/portfolio/01K00000000000000000000004/img_curtain_01.webp",
@@ -200,7 +209,7 @@
           "caption": "커튼 설치 시공",
           "width": 1920,
           "height": 1920,
-          "order": 1
+          "order": 2
         },
         {
           "id": "img_curtain_02",
@@ -209,15 +218,6 @@
           "caption": "커튼 설치 시공",
           "width": 1920,
           "height": 1920,
-          "order": 2
-        },
-        {
-          "id": "img_curtain_03",
-          "file": "images/portfolio/01K00000000000000000000004/img_curtain_03.webp",
-          "alt": "커튼 설치 시공",
-          "caption": "커튼 설치 시공",
-          "width": 1920,
-          "height": 748,
           "order": 3
         }
       ]
