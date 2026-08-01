@@ -19,6 +19,34 @@ const escapeHtml = (value = "") =>
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 
+const serviceIcons = {
+  grid: {
+    label: "클린룸 격자",
+    body: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/>',
+  },
+  home: {
+    label: "건물",
+    body: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+  },
+  layers: {
+    label: "패널",
+    body: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/>',
+  },
+  curtain: {
+    label: "커튼",
+    body: '<path d="M4 3h16M4 3v18M20 3v18"/><path d="M4 8c4 0 4 4 8 4s4-4 8-4M4 14c4 0 4 4 8 4s4-4 8-4"/>',
+  },
+  partition: {
+    label: "파티션",
+    body: '<rect x="3" y="3" width="7" height="18" rx="1"/><rect x="14" y="3" width="7" height="18" rx="1"/><line x1="10" y1="12" x2="14" y2="12"/>',
+  },
+};
+
+const serviceIconSvg = (name) => {
+  const icon = serviceIcons[name] || serviceIcons.grid;
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${icon.body}</svg>`;
+};
+
 const getPath = (object, path) =>
   path.split(".").reduce((value, key) => value?.[key], object);
 
@@ -124,12 +152,17 @@ const serviceCard = (item, index, total) => `
     <div class="card-body">
       <div class="card-grid">
         <label>서비스 제목<input data-service-field="title" value="${escapeHtml(item.title)}" maxlength="80"></label>
-        <label>아이콘
-          <select data-service-field="icon">
-            ${["grid", "home", "layers", "curtain", "partition"].map((icon) =>
-              `<option value="${icon}" ${item.icon === icon ? "selected" : ""}>${icon}</option>`).join("")}
-          </select>
-        </label>
+        <fieldset class="icon-picker wide">
+          <legend>아이콘</legend>
+          <div class="icon-options">
+            ${Object.entries(serviceIcons).map(([name, icon]) => `
+              <label class="icon-option">
+                <input type="radio" data-service-field="icon" name="service-icon-${escapeHtml(item.id)}" value="${name}" ${item.icon === name ? "checked" : ""}>
+                <span class="icon-preview">${serviceIconSvg(name)}</span>
+                <span>${escapeHtml(icon.label)}</span>
+              </label>`).join("")}
+          </div>
+        </fieldset>
         <label class="wide">설명<textarea data-service-field="description" rows="4" maxlength="500">${escapeHtml(item.description)}</textarea></label>
         <label class="check-label wide"><input data-service-field="published" type="checkbox" ${item.published ? "checked" : ""}> 홈페이지에 공개</label>
       </div>

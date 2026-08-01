@@ -74,6 +74,18 @@ legend { padding: 0 6px; font-size: 13px; font-weight: 800; }
 .check-label { display: flex; align-items: center; gap: 8px; }
 .check-label input { width: auto; }
 
+.icon-options { display: grid; grid-template-columns: repeat(5, minmax(90px, 1fr)); gap: 8px; }
+.icon-option {
+  position: relative; display: flex; align-items: center; justify-content: center; gap: 7px;
+  min-height: 62px; padding: 9px; border: 1px solid var(--line); border-radius: 9px;
+  color: var(--muted); background: white; cursor: pointer; text-align: center;
+}
+.icon-option input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.icon-option:has(input:checked) { border-color: var(--brand); color: var(--brand); background: #e8f5ef; box-shadow: 0 0 0 2px #1f7b5b14; }
+.icon-option:has(input:focus-visible) { outline: 3px solid #1f7b5b33; outline-offset: 2px; }
+.icon-preview { display: grid; place-items: center; width: 30px; height: 30px; flex: 0 0 auto; }
+.icon-preview svg { width: 25px; height: 25px; }
+
 .image-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 12px; margin-top: 14px; }
 .image-card { position: relative; padding: 9px; border: 1px solid var(--line); border-radius: 11px; background: white; }
 .image-card.cover { border: 2px solid var(--brand); }
@@ -106,4 +118,5 @@ dialog::backdrop { background: #07140e99; }
   .wide { grid-column: auto; }
   .panel-heading { align-items: flex-start; }
   .image-grid { grid-template-columns: 1fr; }
+  .icon-options { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }

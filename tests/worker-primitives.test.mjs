@@ -59,6 +59,8 @@ test("관리자 사진은 인증된 Worker 경로로 표시하고 입력 클릭 
   );
 
   assert.match(adminSource, /return `\/api\/image\?\$\{params\}`/);
+  assert.match(adminSource, /class="icon-preview"/);
+  assert.match(adminSource, /data-service-field="icon"/);
   assert.match(
     adminSource,
     /if \(!caseAction && !\(imageElement && imageAction\)\) return;/,
