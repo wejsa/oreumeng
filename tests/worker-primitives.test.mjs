@@ -113,6 +113,8 @@ test("관리자 헤더에 오름이엔지 CI를 표시한다", async () => {
   assert.match(adminHtml, /class="admin-brand"/);
   assert.match(adminHtml, /oreumeng_logo\.svg/);
   assert.doesNotMatch(adminHtml, />OREUM ENG CMS</);
-  assert.match(adminCss, /\.admin-brand img\s*\{[^}]*filter:\s*brightness\(0\) invert\(1\)/s);
-  assert.doesNotMatch(adminCss, /\.admin-brand\s*\{[^}]*background:\s*white/s);
+  assert.doesNotMatch(adminCss, /\.admin-brand img\s*\{[^}]*filter:/s);
+  assert.match(adminCss, /\.topbar\s*\{[^}]*background:\s*white/s);
+  assert.match(adminHtml, /<section class="admin-hero"/);
+  assert.match(adminCss, /\.admin-hero\s*\{[^}]*background:\s*linear-gradient/s);
 });
