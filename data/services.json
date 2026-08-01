@@ -1,6 +1,6 @@
 {
-  "sectionTitle": "시공 분야 - 테스트",
-  "sectionDesc": "클린환경 구축에 필요한\n모든 시공 서비스를 제공합니다",
+  "sectionTitle": "시공 분야",
+  "sectionDesc": "클린환경 구축에 필요한 모든 시공 서비스를 제공합니다",
   "items": [
     {
       "id": "system-ceiling",
@@ -40,22 +40,6 @@
       "description": "고객 맞춤 작업공간 분리를 위한 프로파일 파티션 설치. 효율적인 공간 활용과 작업 환경 개선을 제공합니다.",
       "icon": "partition",
       "order": 5,
-      "published": true
-    },
-    {
-      "id": "service-msabbqoe-s78",
-      "title": "새 서비스222",
-      "description": "서비스 설명을 입력해 주세요.222",
-      "icon": "grid",
-      "order": 6,
-      "published": true
-    },
-    {
-      "id": "service-msab3s0k-16lw",
-      "title": "테스트 서비스",
-      "description": "서비스 설명을 입력해 주세요.",
-      "icon": "grid",
-      "order": 7,
       "published": true
     }
   ]
