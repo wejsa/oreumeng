@@ -31,4 +31,9 @@ test("정적 결과물에 핵심 콘텐츠와 SEO 정보가 포함된다", async
   assert.match(html, /id="portfolio"/);
   assert.doesNotMatch(html, /fetch\(["']\/api\/content/);
   assert.doesNotMatch(html, /\.(?:jpg|jpeg|png)["']/i);
+  assert.match(
+    html,
+    /\.services-grid\s*\{[^}]*grid-template-columns:\s*repeat\(3,\s*minmax\(0,\s*1fr\)\)/s,
+  );
+  assert.doesNotMatch(html, /\.services-grid \.service-card:nth-child/);
 });

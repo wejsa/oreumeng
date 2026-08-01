@@ -12,8 +12,11 @@ test("ULID와 이미지 ID가 허용 형식으로 생성된다", () => {
 });
 
 test("실제 WebP 파일의 크기를 읽는다", async () => {
+  const about = JSON.parse(
+    await readFile(new URL("../data/about.json", import.meta.url), "utf8"),
+  );
   const bytes = await readFile(
-    new URL("../images/about/main.webp", import.meta.url),
+    new URL(`../${about.image}`, import.meta.url),
   );
   const dimensions = webpDimensions(
     bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength),

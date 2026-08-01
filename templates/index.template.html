@@ -435,32 +435,12 @@
         /* Services Section */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3, minmax(0, 1fr));
             gap: 30px;
-            justify-items: center;
-        }
-
-        .services-grid .service-card:nth-child(4),
-        .services-grid .service-card:nth-child(5) {
-            grid-column: span 1;
-        }
-
-        @media (min-width: 1025px) {
-            .services-grid {
-                grid-template-columns: repeat(6, 1fr);
-            }
-            .services-grid .service-card {
-                grid-column: span 2;
-            }
-            .services-grid .service-card:nth-child(4) {
-                grid-column: 2 / span 2;
-            }
-            .services-grid .service-card:nth-child(5) {
-                grid-column: 4 / span 2;
-            }
         }
 
         .service-card {
+            width: 100%;
             background: var(--white);
             border-radius: 20px;
             padding: 40px 30px;
