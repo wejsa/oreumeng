@@ -26,6 +26,11 @@
       "id": "field-msads404-lmi",
       "label": "파티션",
       "order": 5
+    },
+    {
+      "id": "field-msadyary-uda",
+      "label": "새 시공 분야",
+      "order": 6
     }
   ],
   "cases": [
@@ -256,6 +261,25 @@
           "width": 1920,
           "height": 748,
           "order": 3
+        }
+      ]
+    },
+    {
+      "id": "01KYYPXW48GN95FBHBJVHW1CGD",
+      "title": "새 시공 분야",
+      "categoryId": "field-msadyary-uda",
+      "order": 6,
+      "published": true,
+      "coverImageId": "img_01KYYPXS7K3DZDRKXJD4SK46Z2",
+      "images": [
+        {
+          "id": "img_01KYYPXS7K3DZDRKXJD4SK46Z2",
+          "file": "images/portfolio/01KYYPXW48GN95FBHBJVHW1CGD/img_01KYYPXS7K3DZDRKXJD4SK46Z2.webp",
+          "alt": "새 시공분야임",
+          "caption": "새 시공분야임",
+          "width": 457,
+          "height": 602,
+          "order": 1
         }
       ]
     }
