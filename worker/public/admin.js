@@ -6,6 +6,8 @@ const state = {
   previewUrls: new Map(),
   dirty: false,
   busy: false,
+  deploymentExpected: false,
+  deploymentPollToken: 0,
 };
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -117,6 +119,52 @@ const markClean = () => {
   $("#dirty-indicator").textContent = "저장된 상태";
   $("#dirty-indicator").classList.remove("dirty");
   $("#save-button").disabled = true;
+};
+
+const setDeploymentStatus = (status, message) => {
+  const indicator = $("#deployment-indicator");
+  indicator.hidden = false;
+  indicator.textContent = message;
+  indicator.className = `status deployment ${status}`;
+};
+
+const wait = (milliseconds) =>
+  new Promise((resolve) => setTimeout(resolve, milliseconds));
+
+const trackDeployment = async (commit, deploymentExpected) => {
+  const pollToken = ++state.deploymentPollToken;
+  if (!deploymentExpected) {
+    setDeploymentStatus("development", "개발 브랜치에 저장됨");
+    return;
+  }
+
+  setDeploymentStatus("pending", "홈페이지 반영 대기 중");
+  try {
+    for (let attempt = 0; attempt < 45; attempt += 1) {
+      if (pollToken !== state.deploymentPollToken) return;
+      const result = await api(`/api/status?commit=${encodeURIComponent(commit)}`);
+      if (result.state === "success") {
+        setDeploymentStatus("success", "홈페이지 반영 완료");
+        return;
+      }
+      if (result.state === "failure") {
+        setDeploymentStatus("failure", "홈페이지 반영 실패");
+        showNotice("홈페이지 자동 반영에 실패했습니다. GitHub Actions를 확인해 주세요.", true);
+        return;
+      }
+      if (result.state === "not_applicable") {
+        setDeploymentStatus("development", "개발 브랜치에 저장됨");
+        return;
+      }
+      setDeploymentStatus("pending", result.state === "in_progress" ? "홈페이지 반영 중" : "홈페이지 반영 대기 중");
+      await wait(attempt < 10 ? 3000 : 5000);
+    }
+    setDeploymentStatus("pending", "홈페이지 반영 확인 지연");
+  } catch {
+    if (pollToken === state.deploymentPollToken) {
+      setDeploymentStatus("failure", "배포 상태 확인 실패");
+    }
+  }
 };
 
 const setBusy = (busy, label = "변경사항 저장") => {
@@ -464,6 +512,7 @@ const save = async () => {
     state.stagedImages = [];
     markClean();
     $("#revert-button").disabled = false;
+    void trackDeployment(result.commit, result.deploymentExpected);
     const message = "저장이 완료되었습니다.";
     showNotice(message);
     showResultDialog("저장 완료", message);
@@ -505,6 +554,7 @@ const revertLatest = async () => {
     });
     showNotice("마지막 변경을 되돌렸습니다. 최신 내용을 다시 불러옵니다.");
     await loadContent();
+    void trackDeployment(result.commit, result.deploymentExpected);
     showNotice("되돌리기를 develop-codex에 저장했습니다. 운영 홈페이지는 변경되지 않습니다.");
   } catch (error) {
     showNotice(errorMessage(error), true);
@@ -525,11 +575,16 @@ const loadContent = async () => {
     });
     state.baseCommit = result.baseCommit;
     state.latestCmsCommit = result.latestCmsCommit;
+    state.deploymentExpected = result.deploymentExpected;
     state.stagedImages = [];
     state.previewUrls.forEach((url) => URL.revokeObjectURL(url));
     state.previewUrls.clear();
     render();
     markClean();
+    setDeploymentStatus(
+      state.deploymentExpected ? "success" : "development",
+      state.deploymentExpected ? "자동 반영 사용 중" : "개발 브랜치 모드",
+    );
     $("#loading").hidden = true;
     $$(".tab-panel").forEach((panel) => {
       panel.hidden = panel.dataset.panel !== "about";

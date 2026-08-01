@@ -180,3 +180,27 @@ test("관리자 로그인 허용 이메일 두 개를 Worker 설정에 유지한
   const config = await readFile(new URL("../worker/wrangler.toml", import.meta.url), "utf8");
   assert.match(config, /ALLOWED_EMAILS\s*=\s*"jaeseong\.sim85@gmail\.com,autocad@paran\.com"/);
 });
+
+test("Worker 로그와 운영 배포 브랜치가 설정되어 있다", async () => {
+  const [config, source] = await Promise.all([
+    readFile(new URL("../worker/wrangler.toml", import.meta.url), "utf8"),
+    readFile(new URL("../worker/src/index.js", import.meta.url), "utf8"),
+  ]);
+  assert.match(config, /\[observability\][\s\S]*enabled\s*=\s*true[\s\S]*head_sampling_rate\s*=\s*1/);
+  assert.match(config, /SITE_DEPLOY_BRANCH\s*=\s*"main"/);
+  assert.match(source, /cms\.content_saved/);
+  assert.match(source, /request\.failed/);
+});
+
+test("관리자 화면은 저장 커밋의 홈페이지 배포 상태를 표시한다", async () => {
+  const [adminHtml, adminSource] = await Promise.all([
+    readFile(new URL("../worker/public/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../worker/public/admin.js", import.meta.url), "utf8"),
+  ]);
+  assert.match(adminHtml, /id="deployment-indicator"/);
+  assert.match(adminSource, /\/api\/status\?commit=/);
+  assert.match(adminSource, /홈페이지 반영 대기 중/);
+  assert.match(adminSource, /홈페이지 반영 완료/);
+  assert.match(adminSource, /홈페이지 반영 실패/);
+  assert.match(adminSource, /개발 브랜치에 저장됨/);
+});

@@ -34,6 +34,14 @@ const json = (value, status = 200) =>
 
 const fail = (status, code, message) => json({ ok: false, code, message }, status);
 
+const logEvent = (level, event, details = {}) => {
+  const logger = console[level] || console.log;
+  logger({ event, ...details });
+};
+
+const expectsSiteDeployment = (env, github) =>
+  github.branch === (env.SITE_DEPLOY_BRANCH || "main");
+
 const parseJson = async (request, maxBytes = 1_000_000) => {
   const type = request.headers.get("Content-Type") || "";
   if (!type.toLowerCase().startsWith("application/json")) {
@@ -113,7 +121,7 @@ const imagePaths = ({ about, portfolio }) =>
 const commitForRequest = (commit, idempotencyKey) =>
   commit.message.includes(`[request:${idempotencyKey}]`);
 
-const contentResponse = async (github) => {
+const contentResponse = async (github, env) => {
   const reference = await github.getRef();
   const [loaded, latest] = await Promise.all([
     loadContent(github, reference.object.sha),
@@ -123,6 +131,8 @@ const contentResponse = async (github) => {
     ok: true,
     baseCommit: reference.object.sha,
     latestCmsCommit: latest?.sha || null,
+    branch: github.branch,
+    deploymentExpected: expectsSiteDeployment(env, github),
     files: loaded.files,
     content: loaded.content,
   });
@@ -225,7 +235,12 @@ const saveContent = async (request, env, github, identity) => {
   const head = reference.object.sha;
   const headCommit = await github.getCommit(head);
   if (commitForRequest(headCommit, idempotencyKey)) {
-    return json({ ok: true, commit: head, idempotent: true });
+    return json({
+      ok: true,
+      commit: head,
+      idempotent: true,
+      deploymentExpected: expectsSiteDeployment(env, github),
+    });
   }
   if (head !== baseCommit) {
     return fail(409, "content-conflict", "다른 변경이 먼저 저장되었습니다.");
@@ -318,13 +333,27 @@ const saveContent = async (request, env, github, identity) => {
     }
     throw error;
   }
-  return json({ ok: true, commit: created.sha, idempotent: false });
+  logEvent("info", "cms.content_saved", {
+    branch: github.branch,
+    commit: created.sha,
+    addedImages: added.length,
+    removedImages: removed.length,
+  });
+  return json({
+    ok: true,
+    commit: created.sha,
+    idempotent: false,
+    deploymentExpected: expectsSiteDeployment(env, github),
+  });
 };
 
-const deploymentStatus = async (url, github) => {
+const deploymentStatus = async (url, env, github) => {
   const sha = url.searchParams.get("commit") || "";
   if (!/^[0-9a-f]{40}$/.test(sha)) {
     return fail(422, "invalid-commit", "커밋 SHA가 올바르지 않습니다.");
+  }
+  if (!expectsSiteDeployment(env, github)) {
+    return json({ ok: true, commit: sha, state: "not_applicable" });
   }
   const result = await github.listWorkflowRuns(sha);
   const run = result.workflow_runs.find((item) => item.head_sha === sha);
@@ -356,7 +385,7 @@ const latestCmsCommit = async (github, startSha) => {
   return { sha: latest.sha, commit: await github.getCommit(latest.sha) };
 };
 
-const revertContent = async (request, github, identity) => {
+const revertContent = async (request, env, github, identity) => {
   const body = await parseJson(request, 50_000);
   const { baseCommit, targetCommit, idempotencyKey } = body;
   if (
@@ -370,7 +399,12 @@ const revertContent = async (request, github, identity) => {
   const currentSha = reference.object.sha;
   const currentCommit = await github.getCommit(currentSha);
   if (commitForRequest(currentCommit, idempotencyKey)) {
-    return json({ ok: true, commit: currentSha, idempotent: true });
+    return json({
+      ok: true,
+      commit: currentSha,
+      idempotent: true,
+      deploymentExpected: expectsSiteDeployment(env, github),
+    });
   }
   if (currentSha !== baseCommit) {
     return fail(409, "content-conflict", "다른 변경이 먼저 저장되었습니다.");
@@ -419,14 +453,24 @@ const revertContent = async (request, github, identity) => {
     }
     throw error;
   }
-  return json({ ok: true, commit: created.sha, reverted: targetCommit });
+  logEvent("info", "cms.content_reverted", {
+    branch: github.branch,
+    commit: created.sha,
+    revertedCommit: targetCommit,
+  });
+  return json({
+    ok: true,
+    commit: created.sha,
+    reverted: targetCommit,
+    deploymentExpected: expectsSiteDeployment(env, github),
+  });
 };
 
 const handleApi = async (request, env, identity) => {
   const github = new GitHubClient(env);
   const url = new URL(request.url);
   if (request.method === "GET" && url.pathname === "/api/content") {
-    return contentResponse(github);
+    return contentResponse(github, env);
   }
   if (request.method === "GET" && url.pathname === "/api/image") {
     return imageResponse(url, github);
@@ -440,11 +484,11 @@ const handleApi = async (request, env, identity) => {
     return saveContent(request, env, github, identity);
   }
   if (request.method === "GET" && url.pathname === "/api/status") {
-    return deploymentStatus(url, github);
+    return deploymentStatus(url, env, github);
   }
   if (request.method === "POST" && url.pathname === "/api/revert") {
     assertMutationRequest(request);
-    return revertContent(request, github, identity);
+    return revertContent(request, env, github, identity);
   }
   return fail(404, "not-found", "요청한 기능을 찾을 수 없습니다.");
 };
@@ -452,7 +496,14 @@ const handleApi = async (request, env, identity) => {
 export default {
   async fetch(request, env) {
     const identity = await verifyAccess(request, env);
-    if (!identity.ok) return fail(401, "unauthorized", "로그인이 필요합니다.");
+    if (!identity.ok) {
+      logEvent("warn", "access.denied", {
+        method: request.method,
+        path: new URL(request.url).pathname,
+        ray: request.headers.get("CF-Ray") || undefined,
+      });
+      return fail(401, "unauthorized", "로그인이 필요합니다.");
+    }
     try {
       rateLimit(identity.email);
       const url = new URL(request.url);
@@ -469,6 +520,14 @@ export default {
       }
       return new Response(asset.body, { status: asset.status, headers });
     } catch (error) {
+      logEvent("error", "request.failed", {
+        method: request.method,
+        path: new URL(request.url).pathname,
+        ray: request.headers.get("CF-Ray") || undefined,
+        errorType: error?.name || "Error",
+        errorCode: error?.message || "unknown",
+        upstreamStatus: error instanceof GitHubError ? error.status : undefined,
+      });
       if (error instanceof GitHubError) {
         if (error.status === 401) {
           return fail(502, "github-token", "GitHub 인증 정보를 확인해 주세요.");

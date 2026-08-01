@@ -112,6 +112,11 @@ legend { padding: 0 6px; font-size: 13px; font-weight: 800; }
 .status { padding: 6px 10px; border-radius: 99px; font-size: 12px; font-weight: 800; }
 .status.muted { color: var(--muted); background: var(--soft); border: 1px solid var(--line); }
 .status.dirty { color: #8a5a00; background: #fff6d8; border: 1px solid #eed68a; }
+.status.deployment { color: #285b45; background: #e5f4ed; border: 1px solid #acd3c1; }
+.status.deployment.pending { color: #765400; background: #fff6d8; border-color: #eed68a; }
+.status.deployment.success { color: #15583f; background: #e5f4ed; border-color: #acd3c1; }
+.status.deployment.failure { color: #8b2018; background: #fdecea; border-color: #efb7b2; }
+.status.deployment.development { color: #44536a; background: #edf2f8; border-color: #c9d4e3; }
 .notice { margin-bottom: 16px; padding: 13px 15px; border-radius: 10px; background: #e5f4ed; color: #15583f; font-weight: 700; }
 .notice.error { color: #8b2018; background: #fdecea; }
 .loading { padding: 60px 20px; text-align: center; color: var(--muted); }
