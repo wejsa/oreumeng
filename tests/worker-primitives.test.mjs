@@ -104,3 +104,13 @@ test("관리자 저장 성공과 실패를 결과 팝업으로 알린다", async
   assert.match(adminSource, /showResultDialog\("저장 완료", message\)/);
   assert.match(adminSource, /showResultDialog\("저장 실패", message, true\)/);
 });
+
+test("관리자 헤더에 오름이엔지 CI를 표시한다", async () => {
+  const adminHtml = await readFile(
+    new URL("../worker/public/index.html", import.meta.url),
+    "utf8",
+  );
+  assert.match(adminHtml, /class="admin-brand"/);
+  assert.match(adminHtml, /oreumeng_logo\.svg/);
+  assert.doesNotMatch(adminHtml, />OREUM ENG CMS</);
+});
