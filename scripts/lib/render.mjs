@@ -60,7 +60,7 @@ export const renderAbout = (about, currentYear) => `
                     </div>
                 </div>
                 <div class="about-image">
-                    <img src="${escapeHtml(about.image)}" alt="${escapeHtml(about.imageAlt)}" width="1600" height="1067" loading="lazy">
+                    <img src="${escapeHtml(about.image)}" alt="${escapeHtml(`${about.heading.replace(/\s+/g, " ").trim()} 관련 이미지`)}" width="1600" height="1067" loading="lazy">
                 </div>
             </div>
         </div>

@@ -132,7 +132,6 @@ const about = {
     { type: "sinceYear", value: 2005, suffix: "년+", label: "시공 경력" },
   ],
   image: "images/about/main.webp",
-  imageAlt: "오름이엔지 클린룸 시공 현장",
 };
 
 const convert = async (source, destination, maxEdge, quality = 82) => {
@@ -215,4 +214,3 @@ const migrate = async () => {
 };
 
 await migrate();
-

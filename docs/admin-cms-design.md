@@ -192,8 +192,7 @@ JSON-LD, 메타태그, 연락처에 사용하는 회사 기본정보의 단일 �
     { "type": "static",     "value": "100+", "label": "시공 현장" },
     { "type": "sinceYear",  "value": 2005,   "suffix": "년+", "label": "시공 경력" }
   ],
-  "image": "images/about/main.webp",
-  "imageAlt": "오름이엔지 클린룸 시공 현장"
+  "image": "images/about/main.webp"
 }
 ```
 
@@ -244,7 +243,6 @@ JSON-LD, 메타태그, 연락처에 사용하는 회사 기본정보의 단일 �
       "id": "01J8XQ2A3B4C5D6E7F8G9H0J1K",
       "title": "안성 반도체 부품 공장 클린룸",
       "categoryId": "ceiling",
-      "description": "생산라인 확장에 따른 시스템실링 및 FFU 설치. Class 1000 기준 충족.",
       "order": 1,
       "published": true,
       "coverImageId": "img_7f3a9c",
@@ -662,7 +660,7 @@ Worker는 커밋 전에 동일한 JSON Schema로 1차 검증하고, `build.mjs`�
 - 카테고리 필터 / 순서 변경 / 신규 현장 등록
 
 **현장 편집 화면**
-- 시공 분야(직접 입력, 홈페이지 시공사례 제목으로 사용), 현장 설명, 홈페이지 공개 여부
+- 시공 분야(직접 입력, 홈페이지 시공사례 제목으로 사용), 홈페이지 공개 여부
 - 사진 영역
   - 드래그&드롭 또는 파일 선택으로 다중 업로드
   - 업로드 전 미리보기 + 변환 진행률

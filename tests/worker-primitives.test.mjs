@@ -139,7 +139,7 @@ test("현장 기본 정보는 직접 입력하는 시공 분야와 홈페이지 
   assert.match(adminSource, /시공 분야<input data-case-field="title"[^>]*maxlength="40"/);
   assert.doesNotMatch(adminSource, /data-case-field="categoryId"/);
   assert.doesNotMatch(adminSource, />현장명</);
-  assert.match(adminSource, /홈페이지에 공개[\s\S]*현장 설명/);
+  assert.match(adminSource, /홈페이지에 공개/);
   assert.match(adminSource, /syncPortfolioCategories/);
   assert.match(adminCss, /\.case-summary-grid\s*\{[^}]*grid-template-columns:/s);
 });
@@ -152,4 +152,15 @@ test("관리자 헤더는 흰색 한 줄에 CI, 제목, 상태, 작업 버튼 �
   assert.match(adminHtml, /class="topbar"[\s\S]*class="admin-brand"[\s\S]*<h1>홈페이지 관리<\/h1>[\s\S]*저장된 상태[\s\S]*마지막 변경 되돌리기[\s\S]*변경사항 저장[\s\S]*<\/header>/);
   assert.doesNotMatch(adminHtml, /class="admin-hero"/);
   assert.match(adminCss, /\.topbar\s*\{[^}]*background:\s*white/s);
+});
+
+test("미사용 회사소개 대체 텍스트와 현장 설명을 입력받지 않는다", async () => {
+  const [adminHtml, adminSource] = await Promise.all([
+    readFile(new URL("../worker/public/index.html", import.meta.url), "utf8"),
+    readFile(new URL("../worker/public/admin.js", import.meta.url), "utf8"),
+  ]);
+  assert.doesNotMatch(adminHtml, /data-bind="about\.imageAlt"/);
+  assert.match(adminSource, /const aboutImageAlt/);
+  assert.doesNotMatch(adminSource, /data-case-field="description"/);
+  assert.doesNotMatch(adminSource, />현장 설명</);
 });

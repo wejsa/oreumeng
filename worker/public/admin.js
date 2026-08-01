@@ -132,6 +132,9 @@ const normalizeOrders = (items) => {
   });
 };
 
+const aboutImageAlt = () =>
+  `${state.content.about.heading.replace(/\s+/g, " ").trim()} 관련 이미지`;
+
 const imageUrl = (path) => {
   if (state.previewUrls.has(path)) return state.previewUrls.get(path);
   const params = new URLSearchParams({ path });
@@ -146,7 +149,7 @@ const bindStaticFields = () => {
   });
   $("#about-paragraphs").value = state.content.about.paragraphs.join("\n\n");
   $("#about-preview").src = imageUrl(state.content.about.image);
-  $("#about-preview").alt = state.content.about.imageAlt;
+  $("#about-preview").alt = aboutImageAlt();
 };
 
 const serviceCard = (item, index, total) => `
@@ -222,7 +225,6 @@ const caseCard = (item, index, total) => {
         <div class="card-grid case-summary-grid">
           <label>시공 분야<input data-case-field="title" maxlength="40" value="${escapeHtml(item.title)}" placeholder="예: 시스템실링"></label>
           <label class="check-label published-check"><input data-case-field="published" type="checkbox" ${item.published ? "checked" : ""}> 홈페이지에 공개</label>
-          <label class="wide">현장 설명<textarea data-case-field="description" rows="3" maxlength="600">${escapeHtml(item.description)}</textarea></label>
         </div>
         <div class="panel-heading">
           <div><h3>현장 사진 (${item.images.length}장)</h3><p class="help">대표 사진과 표시 순서를 지정할 수 있습니다.</p></div>
@@ -392,9 +394,7 @@ const validateBeforeSave = () => {
     }
   }
   for (const item of portfolio.cases) {
-    if (!item.title.trim() || !item.description.trim()) {
-      throw new Error("모든 현장의 시공 분야와 설명을 입력해 주세요.");
-    }
+    if (!item.title.trim()) throw new Error("모든 현장의 시공 분야를 입력해 주세요.");
     if (!item.images.length) throw new Error(`‘${item.title}’에 사진을 한 장 이상 추가해 주세요.`);
     if (!item.images.some((image) => image.id === item.coverImageId)) {
       throw new Error(`‘${item.title}’의 대표 사진을 지정해 주세요.`);
@@ -510,6 +510,8 @@ const loadContent = async () => {
   try {
     const result = await api("/api/content");
     state.content = clone(result.content);
+    delete state.content.about.imageAlt;
+    state.content.portfolio.cases.forEach((item) => delete item.description);
     state.baseCommit = result.baseCommit;
     state.latestCmsCommit = result.latestCmsCommit;
     state.stagedImages = [];
@@ -545,7 +547,7 @@ document.addEventListener("input", (event) => {
   if (input.dataset.bind) {
     const numeric = input.type === "number";
     setPath(state.content, input.dataset.bind, numeric ? Number(input.value) : input.value);
-    if (input.dataset.bind === "about.imageAlt") $("#about-preview").alt = input.value;
+    if (input.dataset.bind === "about.heading") $("#about-preview").alt = aboutImageAlt();
     markDirty();
   }
   if (input === $("#about-paragraphs")) {
@@ -689,7 +691,6 @@ $("#add-case").addEventListener("click", () => {
     id: ulid(),
     title: "새 시공 분야",
     categoryId: "",
-    description: "현장 설명을 입력해 주세요.",
     order: cases.length + 1,
     published: false,
     coverImageId: "",

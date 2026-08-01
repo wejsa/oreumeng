@@ -73,7 +73,6 @@ export const validateAbout = (about) => {
     text(stat.label, `about.stats[${index}].label`, 40);
   });
   safeImagePath(about.image, "images/about/", "about.image");
-  text(about.imageAlt, "about.imageAlt", 160);
   return about;
 };
 
@@ -126,7 +125,6 @@ export const validatePortfolio = (portfolio) => {
       throw new Error(`portfolio.cases[${caseIndex}].id: 형식이 잘못되었습니다.`);
     }
     text(item.title, `portfolio.cases[${caseIndex}].title`, 40);
-    text(item.description, `portfolio.cases[${caseIndex}].description`, 600);
     if (!categoryIds.has(item.categoryId)) {
       throw new Error(`portfolio.cases[${caseIndex}].categoryId: 없는 카테고리입니다.`);
     }
