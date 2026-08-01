@@ -189,10 +189,11 @@ const renderServices = () => {
 const imageCard = (image, imageIndex, item) => `
   <div class="image-card ${item.coverImageId === image.id ? "cover" : ""}" data-image-index="${imageIndex}">
     ${item.coverImageId === image.id ? '<span class="cover-badge">대표</span>' : ""}
-    <img src="${escapeHtml(imageUrl(image.file))}" alt="${escapeHtml(image.alt)}">
+    <img src="${escapeHtml(imageUrl(image.file))}" alt="${escapeHtml(image.caption || image.alt)}">
     <div class="image-fields">
-      <input data-image-field="alt" value="${escapeHtml(image.alt)}" maxlength="180" aria-label="대체 텍스트" placeholder="사진 설명(필수)">
-      <textarea data-image-field="caption" rows="2" maxlength="240" aria-label="사진 내용" placeholder="홈페이지에 표시할 사진 내용">${escapeHtml(image.caption)}</textarea>
+      <label>시공 장소 또는 간단한 설명
+        <textarea data-image-field="caption" rows="3" maxlength="240" aria-label="시공 장소 또는 간단한 설명" placeholder="예: 안성 ○○공장 크린부스 내부 시공">${escapeHtml(image.caption)}</textarea>
+      </label>
     </div>
     <div class="image-toolbar">
       <div class="row-actions">
@@ -219,15 +220,15 @@ const caseCard = (item, index, total) => {
         </div>
       </div>
       <div class="card-body">
-        <div class="card-grid">
-          <label class="wide">현장명<textarea data-case-field="title" rows="2" maxlength="120">${escapeHtml(item.title)}</textarea></label>
+        <div class="card-grid case-summary-grid">
+          <label>현장명<textarea data-case-field="title" rows="2" maxlength="120">${escapeHtml(item.title)}</textarea></label>
           <label>시공 분야
             <select data-case-field="categoryId">
               ${categories.map((category) =>
                 `<option value="${escapeHtml(category.id)}" ${item.categoryId === category.id ? "selected" : ""}>${escapeHtml(category.label)}</option>`).join("")}
             </select>
           </label>
-          <label class="check-label"><input data-case-field="published" type="checkbox" ${item.published ? "checked" : ""}> 홈페이지에 공개</label>
+          <label class="check-label published-check"><input data-case-field="published" type="checkbox" ${item.published ? "checked" : ""}> 홈페이지 등록</label>
           <label class="wide">현장 설명<textarea data-case-field="description" rows="3" maxlength="600">${escapeHtml(item.description)}</textarea></label>
         </div>
         <div class="panel-heading">
@@ -364,7 +365,7 @@ const uploadCaseImages = async (caseIndex, files, progress) => {
         id: result.imageId,
         file: result.path,
         alt: `${item.title} ${item.images.length + 1}`,
-        caption: item.title,
+        caption: "",
         width: result.width,
         height: result.height,
         order: item.images.length + 1,
@@ -405,8 +406,11 @@ const validateBeforeSave = () => {
     if (!item.images.some((image) => image.id === item.coverImageId)) {
       throw new Error(`‘${item.title}’의 대표 사진을 지정해 주세요.`);
     }
-    if (item.images.some((image) => !image.alt.trim() || !image.caption.trim())) {
-      throw new Error(`‘${item.title}’의 모든 사진 설명과 캡션을 입력해 주세요.`);
+    item.images.forEach((image, index) => {
+      image.alt = image.caption.trim() || `${item.title} ${index + 1}`;
+    });
+    if (item.images.some((image) => !image.caption.trim())) {
+      throw new Error(`‘${item.title}’의 모든 사진에 시공 장소 또는 간단한 설명을 입력해 주세요.`);
     }
   }
 };

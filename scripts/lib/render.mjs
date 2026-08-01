@@ -105,7 +105,6 @@ export const renderPortfolio = (portfolio) => {
     cases.map((item) => [
       item.id,
       {
-        title: item.title,
         images: item.images.map(({ file, alt, caption }) => ({ file, alt, caption })),
       },
     ]),
@@ -136,7 +135,6 @@ export const renderPortfolio = (portfolio) => {
                       (image, index) => `<button class="portfolio-item" type="button" data-category="${escapeHtml(item.categoryId)}" onclick="openPortfolioGallery('${escapeHtml(item.id)}', ${index})">
                     <img src="${escapeHtml(image.file.replace(/\.webp$/, "-thumb.webp"))}" alt="${escapeHtml(image.alt)}" width="640" height="${Math.round((image.height / image.width) * 640)}" loading="lazy">
                     <div class="portfolio-overlay">
-                        <h4>${multilineHtml(item.title)}</h4>
                         <p>${multilineHtml(image.caption)}</p>
                     </div>
                 </button>`,

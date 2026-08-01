@@ -48,4 +48,6 @@ test("정적 결과물에 핵심 콘텐츠와 SEO 정보가 포함된다", async
     /class="admin-link" href="https:\/\/oreumeng-admin\.oreumeng\.workers\.dev\/"/,
   );
   assert.match(html, /rel="nofollow noopener noreferrer"/);
+  assert.match(html, /<div class="portfolio-overlay">\s*<p>/);
+  assert.doesNotMatch(html, /<div class="portfolio-overlay">\s*<h4>/);
 });

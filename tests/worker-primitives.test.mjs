@@ -124,3 +124,20 @@ test("화면에 표시하지 않는 시공 월은 관리자에서 입력받지 �
   assert.doesNotMatch(adminSource, /constructedAt/);
   assert.doesNotMatch(adminSource, /시공 월/);
 });
+
+test("현장 사진은 설명만 입력받고 대체 텍스트를 자동 생성한다", async () => {
+  const adminSource = await readFile(new URL("../worker/public/admin.js", import.meta.url), "utf8");
+  assert.doesNotMatch(adminSource, /data-image-field="alt"/);
+  assert.match(adminSource, /시공 장소 또는 간단한 설명/);
+  assert.match(adminSource, /image\.alt = image\.caption\.trim\(\)/);
+});
+
+test("현장 기본 정보는 이름, 시공 분야, 홈페이지 등록 순으로 배치한다", async () => {
+  const [adminSource, adminCss] = await Promise.all([
+    readFile(new URL("../worker/public/admin.js", import.meta.url), "utf8"),
+    readFile(new URL("../worker/public/admin.css", import.meta.url), "utf8"),
+  ]);
+  assert.match(adminSource, /class="card-grid case-summary-grid"/);
+  assert.match(adminSource, /현장명[\s\S]*시공 분야[\s\S]*홈페이지 등록[\s\S]*현장 설명/);
+  assert.match(adminCss, /\.case-summary-grid\s*\{[^}]*grid-template-columns:/s);
+});

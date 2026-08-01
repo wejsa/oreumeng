@@ -575,15 +575,11 @@
             transform: translateY(0);
         }
 
-        .portfolio-overlay h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
         .portfolio-overlay p {
-            font-size: 0.85rem;
-            opacity: 0.8;
+            margin: 0;
+            font-size: 0.95rem;
+            line-height: 1.55;
+            font-weight: 500;
         }
 
         /* Contact Section */
@@ -1640,7 +1636,7 @@
             const current = activeGallery.images[activeGalleryIndex];
             img.src = current.file;
             img.alt = current.alt;
-            captionEl.textContent = current.caption || activeGallery.title;
+            captionEl.textContent = current.caption;
             countEl.textContent = `${activeGalleryIndex + 1} / ${activeGallery.images.length}`;
             document.querySelectorAll('.lightbox-nav').forEach(button => {
                 button.hidden = activeGallery.images.length < 2;

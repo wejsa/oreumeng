@@ -83,8 +83,13 @@ legend { padding: 0 6px; font-size: 13px; font-weight: 800; }
 .order-actions, .row-actions { display: flex; gap: 6px; align-items: center; }
 .card-body { padding: 16px; border-top: 1px solid var(--line); }
 .card-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.case-summary-grid { grid-template-columns: minmax(0, 1.4fr) minmax(180px, .8fr) minmax(170px, .65fr); }
 .check-label { display: flex; align-items: center; gap: 8px; }
 .check-label input { width: auto; }
+.published-check {
+  align-self: end; min-height: 43px; padding: 10px 12px;
+  border: 1px solid var(--line); border-radius: 9px; background: white;
+}
 
 .icon-options { display: grid; grid-template-columns: repeat(5, minmax(90px, 1fr)); gap: 8px; }
 .icon-option {
@@ -138,7 +143,7 @@ dialog::backdrop { background: #07140e99; }
   .status { width: 100%; }
   .layout { width: min(100% - 20px, 1180px); margin-top: 12px; }
   .panel { padding: 18px 14px; }
-  .form-grid, .card-grid, .stats-fields, .media-field { grid-template-columns: 1fr; }
+  .form-grid, .card-grid, .case-summary-grid, .stats-fields, .media-field { grid-template-columns: 1fr; }
   .wide { grid-column: auto; }
   .panel-heading { align-items: flex-start; }
   .image-grid { grid-template-columns: 1fr; }
