@@ -208,7 +208,6 @@ const imageCard = (image, imageIndex, item) => `
   </div>`;
 
 const caseCard = (item, index, total) => {
-  const categories = state.content.portfolio.categories;
   return `
     <article class="editor-card" data-case-index="${index}">
       <div class="card-header">
@@ -221,14 +220,8 @@ const caseCard = (item, index, total) => {
       </div>
       <div class="card-body">
         <div class="card-grid case-summary-grid">
-          <label>현장명<textarea data-case-field="title" rows="2" maxlength="120">${escapeHtml(item.title)}</textarea></label>
-          <label>시공 분야
-            <select data-case-field="categoryId">
-              ${categories.map((category) =>
-                `<option value="${escapeHtml(category.id)}" ${item.categoryId === category.id ? "selected" : ""}>${escapeHtml(category.label)}</option>`).join("")}
-            </select>
-          </label>
-          <label class="check-label published-check"><input data-case-field="published" type="checkbox" ${item.published ? "checked" : ""}> 홈페이지 등록</label>
+          <label>시공 분야<input data-case-field="title" maxlength="40" value="${escapeHtml(item.title)}" placeholder="예: 시스템실링"></label>
+          <label class="check-label published-check"><input data-case-field="published" type="checkbox" ${item.published ? "checked" : ""}> 홈페이지에 공개</label>
           <label class="wide">현장 설명<textarea data-case-field="description" rows="3" maxlength="600">${escapeHtml(item.description)}</textarea></label>
         </div>
         <div class="panel-heading">
@@ -400,7 +393,7 @@ const validateBeforeSave = () => {
   }
   for (const item of portfolio.cases) {
     if (!item.title.trim() || !item.description.trim()) {
-      throw new Error("모든 현장의 현장명과 설명을 입력해 주세요.");
+      throw new Error("모든 현장의 시공 분야와 설명을 입력해 주세요.");
     }
     if (!item.images.length) throw new Error(`‘${item.title}’에 사진을 한 장 이상 추가해 주세요.`);
     if (!item.images.some((image) => image.id === item.coverImageId)) {
@@ -415,10 +408,37 @@ const validateBeforeSave = () => {
   }
 };
 
+const syncPortfolioCategories = () => {
+  const portfolio = state.content.portfolio;
+  const previous = portfolio.categories || [];
+  const byLabel = new Map();
+  const categories = [];
+
+  portfolio.cases.forEach((item) => {
+    const label = item.title.trim();
+    const key = label.toLocaleLowerCase("ko-KR");
+    let category = byLabel.get(key);
+    if (!category) {
+      const existing = previous.find((candidate) => candidate.label.trim().toLocaleLowerCase("ko-KR") === key);
+      category = {
+        id: existing?.id || randomId("field"),
+        label,
+        order: categories.length + 1,
+      };
+      byLabel.set(key, category);
+      categories.push(category);
+    }
+    item.categoryId = category.id;
+  });
+
+  portfolio.categories = categories.length ? categories : previous;
+};
+
 const save = async () => {
   setBusy(true, "저장 중…");
   try {
     validateBeforeSave();
+    syncPortfolioCategories();
     const result = await api("/api/content", {
       method: "PUT",
       body: JSON.stringify({
@@ -546,7 +566,7 @@ document.addEventListener("input", (event) => {
   if (caseCardElement && input.dataset.caseField) {
     const item = state.content.portfolio.cases[Number(caseCardElement.dataset.caseIndex)];
     item[input.dataset.caseField] = input.type === "checkbox" ? input.checked : input.value;
-    if (input.dataset.caseField === "title") $(".card-title strong", caseCardElement).textContent = input.value || "현장명 없음";
+    if (input.dataset.caseField === "title") $(".card-title strong", caseCardElement).textContent = input.value || "시공 분야 없음";
     markDirty();
   }
   const imageCardElement = input.closest("[data-image-index]");
@@ -667,8 +687,8 @@ $("#add-case").addEventListener("click", () => {
   const cases = state.content.portfolio.cases;
   cases.push({
     id: ulid(),
-    title: "새 현장",
-    categoryId: state.content.portfolio.categories[0].id,
+    title: "새 시공 분야",
+    categoryId: "",
     description: "현장 설명을 입력해 주세요.",
     order: cases.length + 1,
     published: false,

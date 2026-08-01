@@ -125,7 +125,7 @@ export const validatePortfolio = (portfolio) => {
     if (!/^[A-Z0-9-]{8,40}$/.test(item.id)) {
       throw new Error(`portfolio.cases[${caseIndex}].id: 형식이 잘못되었습니다.`);
     }
-    text(item.title, `portfolio.cases[${caseIndex}].title`, 120);
+    text(item.title, `portfolio.cases[${caseIndex}].title`, 40);
     text(item.description, `portfolio.cases[${caseIndex}].description`, 600);
     if (!categoryIds.has(item.categoryId)) {
       throw new Error(`portfolio.cases[${caseIndex}].categoryId: 없는 카테고리입니다.`);

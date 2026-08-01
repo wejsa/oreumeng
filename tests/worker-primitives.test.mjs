@@ -83,7 +83,7 @@ test("회사소개 제목 입력창은 줄바꿈을 지원한다", async () => {
   assert.doesNotMatch(adminHtml, /<input data-bind="about\.heading"/);
 });
 
-test("관리자 주요 제목과 사진 내용 입력창은 줄바꿈을 지원한다", async () => {
+test("관리자 주요 제목과 사진 설명 입력창은 줄바꿈을 지원한다", async () => {
   const [adminHtml, adminSource] = await Promise.all([
     readFile(new URL("../worker/public/index.html", import.meta.url), "utf8"),
     readFile(new URL("../worker/public/admin.js", import.meta.url), "utf8"),
@@ -91,7 +91,6 @@ test("관리자 주요 제목과 사진 내용 입력창은 줄바꿈을 지원�
   assert.match(adminHtml, /<textarea data-bind="services\.sectionTitle"/);
   assert.match(adminHtml, /<textarea data-bind="portfolio\.sectionTitle"/);
   assert.match(adminSource, /<textarea data-service-field="title"/);
-  assert.match(adminSource, /<textarea data-case-field="title"/);
   assert.match(adminSource, /<textarea data-image-field="caption"/);
 });
 
@@ -131,13 +130,17 @@ test("현장 사진은 설명만 입력받고 대체 텍스트를 자동 생성�
   assert.match(adminSource, /image\.alt = image\.caption\.trim\(\)/);
 });
 
-test("현장 기본 정보는 이름, 시공 분야, 홈페이지 등록 순으로 배치한다", async () => {
+test("현장 기본 정보는 직접 입력하는 시공 분야와 홈페이지 공개 여부로 구성한다", async () => {
   const [adminSource, adminCss] = await Promise.all([
     readFile(new URL("../worker/public/admin.js", import.meta.url), "utf8"),
     readFile(new URL("../worker/public/admin.css", import.meta.url), "utf8"),
   ]);
   assert.match(adminSource, /class="card-grid case-summary-grid"/);
-  assert.match(adminSource, /현장명[\s\S]*시공 분야[\s\S]*홈페이지 등록[\s\S]*현장 설명/);
+  assert.match(adminSource, /시공 분야<input data-case-field="title"[^>]*maxlength="40"/);
+  assert.doesNotMatch(adminSource, /data-case-field="categoryId"/);
+  assert.doesNotMatch(adminSource, />현장명</);
+  assert.match(adminSource, /홈페이지에 공개[\s\S]*현장 설명/);
+  assert.match(adminSource, /syncPortfolioCategories/);
   assert.match(adminCss, /\.case-summary-grid\s*\{[^}]*grid-template-columns:/s);
 });
 
