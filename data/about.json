@@ -7,12 +7,12 @@
   "stats": [
     {
       "type": "static",
-      "value": "100+",
+      "value": "200+",
       "label": "시공 현장"
     },
     {
       "type": "sinceYear",
-      "value": 2005,
+      "value": 2000,
       "suffix": "년+",
       "label": "시공 경력"
     }
