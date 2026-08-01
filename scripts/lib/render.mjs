@@ -9,6 +9,9 @@ const escapeMap = {
 export const escapeHtml = (value) =>
   String(value).replace(/[&<>"']/g, (character) => escapeMap[character]);
 
+export const multilineHtml = (value) =>
+  String(value).split(/\r?\n/).map(escapeHtml).join("<br>");
+
 export const escapeJsonForHtml = (value) =>
   JSON.stringify(value).replace(/</g, "\\u003c").replace(/-->/g, "--\\>");
 
@@ -43,8 +46,8 @@ export const renderAbout = (about, currentYear) => `
             <div class="about-grid">
                 <div class="about-content">
                     <div class="section-badge">${escapeHtml(about.badge)}</div>
-                    <h3>${about.heading.split("\n").map(escapeHtml).join("<br>")}</h3>
-                    ${about.paragraphs.map((paragraph) => `<p>${escapeHtml(paragraph)}</p>`).join("\n                    ")}
+                    <h3>${multilineHtml(about.heading)}</h3>
+                    ${about.paragraphs.map((paragraph) => `<p>${multilineHtml(paragraph)}</p>`).join("\n                    ")}
                     <div class="about-stats">
                         ${about.stats
                           .map(
@@ -69,8 +72,8 @@ export const renderServices = (services) => `
         <div class="container">
             <div class="section-header">
                 <div class="section-badge">SERVICES</div>
-                <h2 class="section-title">${escapeHtml(services.sectionTitle)}</h2>
-                <p class="section-desc">${escapeHtml(services.sectionDesc)}</p>
+                <h2 class="section-title">${multilineHtml(services.sectionTitle)}</h2>
+                <p class="section-desc">${multilineHtml(services.sectionDesc)}</p>
             </div>
             <div class="services-grid">
                 ${services.items
@@ -79,8 +82,8 @@ export const renderServices = (services) => `
                   .map(
                     (item) => `<div class="service-card">
                     <div class="service-icon">${iconSvg(item.icon)}</div>
-                    <h3>${escapeHtml(item.title)}</h3>
-                    <p>${escapeHtml(item.description)}</p>
+                    <h3>${multilineHtml(item.title)}</h3>
+                    <p>${multilineHtml(item.description)}</p>
                 </div>`,
                   )
                   .join("\n                ")}
@@ -114,8 +117,8 @@ export const renderPortfolio = (portfolio) => {
         <div class="container">
             <div class="section-header">
                 <div class="section-badge">PORTFOLIO</div>
-                <h2 class="section-title">${escapeHtml(portfolio.sectionTitle)}</h2>
-                <p class="section-desc">${escapeHtml(portfolio.sectionDesc)}</p>
+                <h2 class="section-title">${multilineHtml(portfolio.sectionTitle)}</h2>
+                <p class="section-desc">${multilineHtml(portfolio.sectionDesc)}</p>
             </div>
             <div class="portfolio-tabs">
                 <button class="tab-btn active" type="button" onclick="filterPortfolio('all', this)">전체</button>
@@ -133,8 +136,8 @@ export const renderPortfolio = (portfolio) => {
                       (image, index) => `<button class="portfolio-item" type="button" data-category="${escapeHtml(item.categoryId)}" onclick="openPortfolioGallery('${escapeHtml(item.id)}', ${index})">
                     <img src="${escapeHtml(image.file.replace(/\.webp$/, "-thumb.webp"))}" alt="${escapeHtml(image.alt)}" width="640" height="${Math.round((image.height / image.width) * 640)}" loading="lazy">
                     <div class="portfolio-overlay">
-                        <h4>${escapeHtml(item.title)}</h4>
-                        <p>${escapeHtml(image.caption)}</p>
+                        <h4>${multilineHtml(item.title)}</h4>
+                        <p>${multilineHtml(image.caption)}</p>
                     </div>
                 </button>`,
                     ),
@@ -179,4 +182,3 @@ export const renderJsonLd = (site) => {
   }
   return escapeJsonForHtml(data);
 };
-

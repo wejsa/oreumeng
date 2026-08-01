@@ -151,7 +151,7 @@ const serviceCard = (item, index, total) => `
     </div>
     <div class="card-body">
       <div class="card-grid">
-        <label>서비스 제목<input data-service-field="title" value="${escapeHtml(item.title)}" maxlength="80"></label>
+        <label class="wide">서비스 제목<textarea data-service-field="title" rows="2" maxlength="80">${escapeHtml(item.title)}</textarea></label>
         <fieldset class="icon-picker wide">
           <legend>아이콘</legend>
           <div class="icon-options">
@@ -182,7 +182,7 @@ const imageCard = (image, imageIndex, item) => `
     <img src="${escapeHtml(imageUrl(image.file))}" alt="${escapeHtml(image.alt)}">
     <div class="image-fields">
       <input data-image-field="alt" value="${escapeHtml(image.alt)}" maxlength="180" aria-label="대체 텍스트" placeholder="사진 설명(필수)">
-      <input data-image-field="caption" value="${escapeHtml(image.caption)}" maxlength="240" aria-label="캡션" placeholder="화면에 표시할 캡션">
+      <textarea data-image-field="caption" rows="2" maxlength="240" aria-label="사진 내용" placeholder="홈페이지에 표시할 사진 내용">${escapeHtml(image.caption)}</textarea>
     </div>
     <div class="image-toolbar">
       <div class="row-actions">
@@ -210,7 +210,7 @@ const caseCard = (item, index, total) => {
       </div>
       <div class="card-body">
         <div class="card-grid">
-          <label>현장명<input data-case-field="title" value="${escapeHtml(item.title)}" maxlength="120"></label>
+          <label class="wide">현장명<textarea data-case-field="title" rows="2" maxlength="120">${escapeHtml(item.title)}</textarea></label>
           <label>시공 분야
             <select data-case-field="categoryId">
               ${categories.map((category) =>
