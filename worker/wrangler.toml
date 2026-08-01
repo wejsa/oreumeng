@@ -20,7 +20,7 @@ ALLOWED_EMAILS = "jaeseong.sim85@gmail.com,autocad@paran.com"
 
 GH_OWNER = "wejsa"
 GH_REPO = "oreumeng"
-GH_BRANCH = "develop-codex"
+GH_BRANCH = "main"
 SITE_DEPLOY_BRANCH = "main"
 
 # 다음 값은 파일에 기록하지 않고 wrangler secret으로만 설정합니다.
