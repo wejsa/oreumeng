@@ -15,6 +15,7 @@ test("정적 결과물에 핵심 콘텐츠와 SEO 정보가 포함된다", async
   assert.match(html, /<title>.+<\/title>/);
   assert.match(html, /application\/ld\+json/);
   assert.match(html, /id="about"/);
+  assert.match(html, /<h3>크린룸 시공의<br>믿을 수 있는 파트너<\/h3>/);
   assert.match(html, /id="services"/);
   assert.match(html, /id="portfolio"/);
   assert.doesNotMatch(html, /fetch\(["']\/api\/content/);

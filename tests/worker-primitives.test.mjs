@@ -67,3 +67,15 @@ test("관리자 사진은 인증된 Worker 경로로 표시하고 입력 클릭 
   );
   assert.match(workerSource, /url\.pathname === "\/api\/image"/);
 });
+
+test("회사소개 제목 입력창은 줄바꿈을 지원한다", async () => {
+  const adminHtml = await readFile(
+    new URL("../worker/public/index.html", import.meta.url),
+    "utf8",
+  );
+  assert.match(
+    adminHtml,
+    /<textarea data-bind="about\.heading"[^>]*><\/textarea>/,
+  );
+  assert.doesNotMatch(adminHtml, /<input data-bind="about\.heading"/);
+});
