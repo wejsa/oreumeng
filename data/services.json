@@ -43,17 +43,17 @@
       "published": true
     },
     {
-      "id": "service-msab3s0k-16lw",
-      "title": "테스트 서비스",
-      "description": "서비스 설명을 입력해 주세요.",
+      "id": "service-msabbqoe-s78",
+      "title": "새 서비스222",
+      "description": "서비스 설명을 입력해 주세요.222",
       "icon": "grid",
       "order": 6,
       "published": true
     },
     {
-      "id": "service-msabbqoe-s78",
-      "title": "새 서비스222",
-      "description": "서비스 설명을 입력해 주세요.222",
+      "id": "service-msab3s0k-16lw",
+      "title": "테스트 서비스",
+      "description": "서비스 설명을 입력해 주세요.",
       "icon": "grid",
       "order": 7,
       "published": true
