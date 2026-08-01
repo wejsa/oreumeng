@@ -93,7 +93,7 @@ export const validateServices = (services) => {
     if (!/^[a-z0-9-]+$/.test(item.id)) {
       throw new Error(`services.items[${index}].id: 형식이 잘못되었습니다.`);
     }
-    text(item.title, `services.items[${index}].title`, 80);
+    singleLine(item.title, `services.items[${index}].title`, 80);
     text(item.description, `services.items[${index}].description`, 500);
     text(item.icon, `services.items[${index}].icon`, 40);
     if (typeof item.published !== "boolean") {

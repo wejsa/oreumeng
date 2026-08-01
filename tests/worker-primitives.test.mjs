@@ -90,7 +90,7 @@ test("관리자 주요 제목과 사진 설명 입력창은 줄바꿈을 지원�
   ]);
   assert.match(adminHtml, /<input data-bind="services\.sectionTitle"/);
   assert.match(adminHtml, /<input data-bind="portfolio\.sectionTitle"/);
-  assert.match(adminSource, /<textarea data-service-field="title"/);
+  assert.match(adminSource, /<input data-service-field="title"/);
   assert.match(adminSource, /<textarea data-image-field="caption"/);
 });
 

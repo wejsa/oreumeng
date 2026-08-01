@@ -34,6 +34,12 @@ test("서비스와 포트폴리오 영역 제목은 한 줄만 허용한다", as
   assert.throws(() => validatePortfolio(portfolio), /한 줄/);
 });
 
+test("서비스 항목 제목은 한 줄만 허용한다", async () => {
+  const services = await json("data/services.json");
+  services.items[0].title = "첫 줄\n둘째 줄";
+  assert.throws(() => validateServices(services), /한 줄/);
+});
+
 test("서비스 순서 중복을 거부한다", async () => {
   const services = await json("data/services.json");
   services.items[1].order = services.items[0].order;

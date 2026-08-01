@@ -172,7 +172,7 @@ const serviceCard = (item, index, total) => `
     </div>
     <div class="card-body">
       <div class="card-grid">
-        <label class="wide">서비스 제목<textarea data-service-field="title" rows="2" maxlength="80">${escapeHtml(item.title)}</textarea></label>
+        <label class="wide">서비스 제목<input data-service-field="title" maxlength="80" value="${escapeHtml(item.title)}"></label>
         <fieldset class="icon-picker wide">
           <legend>아이콘</legend>
           <div class="icon-options">
