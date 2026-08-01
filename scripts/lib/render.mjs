@@ -114,6 +114,7 @@ export const renderPortfolio = (portfolio) => {
     cases.map((item) => [
       item.id,
       {
+        categoryId: item.categoryId,
         images: item.images.map(({ file, alt, caption }) => ({ file, alt, caption })),
       },
     ]),

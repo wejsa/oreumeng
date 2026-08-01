@@ -95,4 +95,7 @@ test("정적 결과물에 핵심 콘텐츠와 SEO 정보가 포함된다", async
   assert.match(html, /rel="nofollow noopener noreferrer"/);
   assert.match(html, /<div class="portfolio-overlay">\s*<p>/);
   assert.doesNotMatch(html, /<div class="portfolio-overlay">\s*<h4>/);
+  assert.match(html, /let activePortfolioCategory = 'all'/);
+  assert.match(html, /function filteredGalleryImages\(category\)/);
+  assert.match(html, /activeGallery = \{ images \}/);
 });

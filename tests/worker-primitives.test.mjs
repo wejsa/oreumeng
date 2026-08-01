@@ -100,8 +100,19 @@ test("관리자 저장 성공과 실패를 결과 팝업으로 알린다", async
     readFile(new URL("../worker/public/admin.js", import.meta.url), "utf8"),
   ]);
   assert.match(adminHtml, /<dialog id="result-dialog"/);
+  assert.match(adminHtml, /id="saving-overlay"/);
   assert.match(adminSource, /showResultDialog\("저장 완료", message\)/);
-  assert.match(adminSource, /showResultDialog\("저장 실패", message, true\)/);
+  assert.match(adminSource, /const message = "저장이 완료되었습니다\."/);
+  assert.match(adminSource, /showResultDialog\("저장 실패", "저장에 실패했습니다\.", true\)/);
+  assert.match(adminSource, /showSavingOverlay\(true\)[\s\S]*showSavingOverlay\(false\)/);
+});
+
+test("현장 첫 사진을 자동 대표로 사용하고 삭제 시 강하게 경고한다", async () => {
+  const adminSource = await readFile(new URL("../worker/public/admin.js", import.meta.url), "utf8");
+  assert.match(adminSource, /item\.coverImageId = item\.images\[0\]\?\.id/);
+  assert.doesNotMatch(adminSource, /data-image-action="cover"/);
+  assert.match(adminSource, /삭제한 사진은 저장 후 복구할 수 없습니다/);
+  assert.doesNotMatch(adminSource, /Git에서도 함께 제거/);
 });
 
 test("관리자 헤더에 오름이엔지 CI를 표시한다", async () => {

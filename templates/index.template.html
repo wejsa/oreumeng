@@ -1602,9 +1602,12 @@
         }
 
         // Portfolio Filter
+        let activePortfolioCategory = 'all';
+
         function filterPortfolio(category, activeButton) {
             const items = document.querySelectorAll('.portfolio-item');
             const buttons = document.querySelectorAll('.tab-btn');
+            activePortfolioCategory = category;
             
             buttons.forEach(btn => btn.classList.remove('active'));
             if (activeButton) activeButton.classList.add('active');
@@ -1627,6 +1630,16 @@
             return element ? JSON.parse(element.textContent) : {};
         }
 
+        function filteredGalleryImages(category) {
+            return Object.entries(galleryData()).flatMap(([caseId, gallery]) => {
+                if (category !== 'all' && gallery.categoryId !== category) return [];
+                return gallery.images.map((image, imageIndex) => ({
+                    ...image,
+                    key: `${caseId}:${imageIndex}`,
+                }));
+            });
+        }
+
         function renderPortfolioImage() {
             if (!activeGallery || !activeGallery.images.length) return;
             const lightbox = document.getElementById('lightbox');
@@ -1645,9 +1658,11 @@
 
         function openPortfolioGallery(caseId, imageIndex) {
             const lightbox = document.getElementById('lightbox');
-            activeGallery = galleryData()[caseId];
-            if (!activeGallery) return;
-            activeGalleryIndex = Math.max(0, Math.min(imageIndex, activeGallery.images.length - 1));
+            const images = filteredGalleryImages(activePortfolioCategory);
+            const selectedIndex = images.findIndex(image => image.key === `${caseId}:${imageIndex}`);
+            if (selectedIndex < 0) return;
+            activeGallery = { images };
+            activeGalleryIndex = selectedIndex;
             renderPortfolioImage();
             lightbox.classList.add('active');
             document.body.style.overflow = 'hidden';

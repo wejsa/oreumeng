@@ -141,9 +141,8 @@ export const validatePortfolio = (portfolio) => {
     }
     unique(item.images.map((image) => image.id), `portfolio.cases[${caseIndex}].images.id`);
     ordered(item.images, `portfolio.cases[${caseIndex}].images`);
-    const imageIds = new Set(item.images.map((image) => image.id));
-    if (!imageIds.has(item.coverImageId)) {
-      throw new Error(`portfolio.cases[${caseIndex}].coverImageId: 없는 이미지입니다.`);
+    if (item.coverImageId !== item.images[0].id) {
+      throw new Error(`portfolio.cases[${caseIndex}].coverImageId: 첫 번째 사진이어야 합니다.`);
     }
     item.images.forEach((image, imageIndex) => {
       if (!/^img_[a-zA-Z0-9_-]+$/.test(image.id)) {

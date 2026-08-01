@@ -132,6 +132,14 @@ const normalizeOrders = (items) => {
   });
 };
 
+const syncCoverImage = (item) => {
+  item.coverImageId = item.images[0]?.id || "";
+};
+
+const showSavingOverlay = (visible) => {
+  $("#saving-overlay").hidden = !visible;
+};
+
 const aboutImageAlt = () =>
   `${state.content.about.heading.replace(/\s+/g, " ").trim()} 관련 이미지`;
 
@@ -190,8 +198,8 @@ const renderServices = () => {
 };
 
 const imageCard = (image, imageIndex, item) => `
-  <div class="image-card ${item.coverImageId === image.id ? "cover" : ""}" data-image-index="${imageIndex}">
-    ${item.coverImageId === image.id ? '<span class="cover-badge">대표</span>' : ""}
+  <div class="image-card ${imageIndex === 0 ? "cover" : ""}" data-image-index="${imageIndex}">
+    ${imageIndex === 0 ? '<span class="cover-badge">대표</span>' : ""}
     <img src="${escapeHtml(imageUrl(image.file))}" alt="${escapeHtml(image.caption || image.alt)}">
     <div class="image-fields">
       <label>시공 장소 또는 간단한 설명
@@ -204,7 +212,6 @@ const imageCard = (image, imageIndex, item) => `
         <button class="icon-button" data-image-action="down" title="뒤로" ${imageIndex === item.images.length - 1 ? "disabled" : ""}>→</button>
       </div>
       <div class="row-actions">
-        <button class="button small" data-image-action="cover" ${item.coverImageId === image.id ? "disabled" : ""}>대표 지정</button>
         <button class="button small" data-image-action="delete">삭제</button>
       </div>
     </div>
@@ -371,6 +378,7 @@ const uploadCaseImages = async (caseIndex, files, progress) => {
       markDirty();
     }
     normalizeOrders(item.images);
+    syncCoverImage(item);
     showNotice(`${files.length}장의 사진을 준비했습니다. 저장 버튼을 눌러 반영하세요.`);
   } finally {
     if (added) {
@@ -396,9 +404,7 @@ const validateBeforeSave = () => {
   for (const item of portfolio.cases) {
     if (!item.title.trim()) throw new Error("모든 현장의 시공 분야를 입력해 주세요.");
     if (!item.images.length) throw new Error(`‘${item.title}’에 사진을 한 장 이상 추가해 주세요.`);
-    if (!item.images.some((image) => image.id === item.coverImageId)) {
-      throw new Error(`‘${item.title}’의 대표 사진을 지정해 주세요.`);
-    }
+    syncCoverImage(item);
     item.images.forEach((image, index) => {
       image.alt = image.caption.trim() || `${item.title} ${index + 1}`;
     });
@@ -435,6 +441,7 @@ const syncPortfolioCategories = () => {
 };
 
 const save = async () => {
+  showSavingOverlay(true);
   setBusy(true, "저장 중…");
   try {
     validateBeforeSave();
@@ -457,7 +464,7 @@ const save = async () => {
     state.stagedImages = [];
     markClean();
     $("#revert-button").disabled = false;
-    const message = "develop-codex에 저장했습니다.\n운영 홈페이지는 변경되지 않습니다. 로컬 미리보기에서 확인하세요.";
+    const message = "저장이 완료되었습니다.";
     showNotice(message);
     showResultDialog("저장 완료", message);
   } catch (error) {
@@ -468,8 +475,9 @@ const save = async () => {
       message = errorMessage(error);
     }
     showNotice(message, true);
-    showResultDialog("저장 실패", message, true);
+    showResultDialog("저장 실패", "저장에 실패했습니다.", true);
   } finally {
+    showSavingOverlay(false);
     setBusy(false);
   }
 };
@@ -511,7 +519,10 @@ const loadContent = async () => {
     const result = await api("/api/content");
     state.content = clone(result.content);
     delete state.content.about.imageAlt;
-    state.content.portfolio.cases.forEach((item) => delete item.description);
+    state.content.portfolio.cases.forEach((item) => {
+      delete item.description;
+      syncCoverImage(item);
+    });
     state.baseCommit = result.baseCommit;
     state.latestCmsCommit = result.latestCmsCommit;
     state.stagedImages = [];
@@ -629,19 +640,15 @@ $("#cases-list").addEventListener("click", async (event) => {
     const imageIndex = Number(imageElement.dataset.imageIndex);
     if (imageAction === "up") swap(item.images, imageIndex, imageIndex - 1);
     if (imageAction === "down") swap(item.images, imageIndex, imageIndex + 1);
-    if (imageAction === "cover") {
-      item.coverImageId = item.images[imageIndex].id;
-      markDirty();
-    }
     if (imageAction === "delete") {
       if (item.images.length === 1) return showNotice("현장에는 사진이 한 장 이상 있어야 합니다.", true);
-      if (!(await confirmAction("사진 삭제", "이 사진을 삭제할까요? 저장하면 Git에서도 함께 제거됩니다."))) return;
-      const [removed] = item.images.splice(imageIndex, 1);
-      if (item.coverImageId === removed.id) item.coverImageId = item.images[0].id;
+      if (!(await confirmAction("사진 삭제", "삭제한 사진은 저장 후 복구할 수 없습니다. 필요한 사진인지 다시 확인한 후 삭제해 주세요."))) return;
+      item.images.splice(imageIndex, 1);
       normalizeOrders(item.images);
       markDirty();
     }
   }
+  if (cases[caseIndex]) syncCoverImage(cases[caseIndex]);
   renderCases();
 });
 
