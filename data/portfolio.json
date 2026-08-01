@@ -18,13 +18,13 @@
       "order": 3
     },
     {
-      "id": "field-msads404-lmi",
-      "label": "파티션",
+      "id": "field-msads404-ot8",
+      "label": "커튼설치",
       "order": 4
     },
     {
-      "id": "field-msads404-ot8",
-      "label": "커튼설치",
+      "id": "field-msads404-lmi",
+      "label": "파티션",
       "order": 5
     }
   ],
@@ -186,10 +186,47 @@
       ]
     },
     {
+      "id": "01K00000000000000000000004",
+      "title": "커튼설치",
+      "categoryId": "field-msads404-ot8",
+      "order": 4,
+      "published": true,
+      "coverImageId": "img_curtain_02",
+      "images": [
+        {
+          "id": "img_curtain_01",
+          "file": "images/portfolio/01K00000000000000000000004/img_curtain_01.webp",
+          "alt": "커튼 설치 시공",
+          "caption": "커튼 설치 시공",
+          "width": 1920,
+          "height": 1920,
+          "order": 1
+        },
+        {
+          "id": "img_curtain_02",
+          "file": "images/portfolio/01K00000000000000000000004/img_curtain_02.webp",
+          "alt": "커튼 설치 시공",
+          "caption": "커튼 설치 시공",
+          "width": 1920,
+          "height": 1920,
+          "order": 2
+        },
+        {
+          "id": "img_curtain_03",
+          "file": "images/portfolio/01K00000000000000000000004/img_curtain_03.webp",
+          "alt": "커튼 설치 시공",
+          "caption": "커튼 설치 시공",
+          "width": 1920,
+          "height": 748,
+          "order": 3
+        }
+      ]
+    },
+    {
       "id": "01K00000000000000000000005",
       "title": "파티션",
       "categoryId": "field-msads404-lmi",
-      "order": 4,
+      "order": 5,
       "published": true,
       "coverImageId": "img_partition_01",
       "images": [
@@ -216,43 +253,6 @@
           "file": "images/portfolio/01K00000000000000000000005/img_partition_03.webp",
           "alt": "파티션 시공",
           "caption": "파티션 시공",
-          "width": 1920,
-          "height": 748,
-          "order": 3
-        }
-      ]
-    },
-    {
-      "id": "01K00000000000000000000004",
-      "title": "커튼설치",
-      "categoryId": "field-msads404-ot8",
-      "order": 5,
-      "published": true,
-      "coverImageId": "img_curtain_01",
-      "images": [
-        {
-          "id": "img_curtain_01",
-          "file": "images/portfolio/01K00000000000000000000004/img_curtain_01.webp",
-          "alt": "커튼 설치 시공",
-          "caption": "커튼 설치 시공",
-          "width": 1920,
-          "height": 1920,
-          "order": 1
-        },
-        {
-          "id": "img_curtain_02",
-          "file": "images/portfolio/01K00000000000000000000004/img_curtain_02.webp",
-          "alt": "커튼 설치 시공",
-          "caption": "커튼 설치 시공",
-          "width": 1920,
-          "height": 1920,
-          "order": 2
-        },
-        {
-          "id": "img_curtain_03",
-          "file": "images/portfolio/01K00000000000000000000004/img_curtain_03.webp",
-          "alt": "커튼 설치 시공",
-          "caption": "커튼 설치 시공",
           "width": 1920,
           "height": 748,
           "order": 3
