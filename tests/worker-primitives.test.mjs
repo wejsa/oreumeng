@@ -165,6 +165,18 @@ test("관리자 헤더는 흰색 한 줄에 CI, 제목, 상태, 작업 버튼 �
   assert.match(adminCss, /\.topbar\s*\{[^}]*background:\s*white/s);
 });
 
+test("관리자 새로고침 시 최근 CMS 배포 상태를 복원한다", async () => {
+  const adminSource = await readFile(new URL("../worker/public/admin.js", import.meta.url), "utf8");
+  assert.match(adminSource, /const restoreDeploymentStatus/);
+  assert.match(adminSource, /trackDeployment\(latestCmsCommit, true\)/);
+  assert.match(adminSource, /restoreDeploymentStatus\(state\.latestCmsCommit, state\.deploymentExpected\)/);
+});
+
+test("관리자 헤더에서 Cloudflare Access 로그아웃을 제공한다", async () => {
+  const adminHtml = await readFile(new URL("../worker/public/index.html", import.meta.url), "utf8");
+  assert.match(adminHtml, /href="\/cdn-cgi\/access\/logout"[^>]*>로그아웃<\/a>/);
+});
+
 test("미사용 회사소개 대체 텍스트와 현장 설명을 입력받지 않는다", async () => {
   const [adminHtml, adminSource] = await Promise.all([
     readFile(new URL("../worker/public/index.html", import.meta.url), "utf8"),

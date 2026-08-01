@@ -63,6 +63,7 @@ legend { padding: 0 6px; font-size: 13px; font-weight: 800; }
 .help { margin: 8px 0 0; color: var(--muted); font-size: 12px; }
 
 .button { border: 1px solid #bfcfc7; border-radius: 9px; padding: 9px 13px; color: var(--ink); background: white; font-weight: 750; }
+.button.logout-button { text-decoration: none; }
 .button.primary { border-color: var(--brand); color: white; background: var(--brand); }
 .button.primary:hover { background: var(--brand-dark); }
 .button.ghost { color: inherit; background: transparent; }

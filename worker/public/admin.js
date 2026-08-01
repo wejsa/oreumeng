@@ -167,6 +167,18 @@ const trackDeployment = async (commit, deploymentExpected) => {
   }
 };
 
+const restoreDeploymentStatus = (latestCmsCommit, deploymentExpected) => {
+  if (!deploymentExpected) {
+    setDeploymentStatus("development", "개발 브랜치 모드");
+    return;
+  }
+  if (latestCmsCommit) {
+    void trackDeployment(latestCmsCommit, true);
+    return;
+  }
+  setDeploymentStatus("success", "자동 반영 사용 중");
+};
+
 const setBusy = (busy, label = "변경사항 저장") => {
   state.busy = busy;
   $("#save-button").textContent = busy ? label : "변경사항 저장";
@@ -581,10 +593,7 @@ const loadContent = async () => {
     state.previewUrls.clear();
     render();
     markClean();
-    setDeploymentStatus(
-      state.deploymentExpected ? "success" : "development",
-      state.deploymentExpected ? "자동 반영 사용 중" : "개발 브랜치 모드",
-    );
+    restoreDeploymentStatus(state.latestCmsCommit, state.deploymentExpected);
     $("#loading").hidden = true;
     $$(".tab-panel").forEach((panel) => {
       panel.hidden = panel.dataset.panel !== "about";
