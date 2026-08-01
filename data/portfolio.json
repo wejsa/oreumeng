@@ -8,23 +8,23 @@
       "order": 1
     },
     {
-      "id": "field-msacpr26-zj3",
-      "label": "크린부스 시공사례",
+      "id": "field-msads404-15oe",
+      "label": "크린부스",
       "order": 2
     },
     {
-      "id": "field-msacpr26-18x8",
-      "label": "판넬타입 시공사례",
+      "id": "field-msads404-1b3g",
+      "label": "판넬타입",
       "order": 3
     },
     {
-      "id": "field-msacpr26-186h",
-      "label": "커튼설치 시공사례",
+      "id": "field-msads404-lmi",
+      "label": "파티션",
       "order": 4
     },
     {
-      "id": "field-msacpr26-4nn",
-      "label": "파티션 시공사례",
+      "id": "field-msads404-ot8",
+      "label": "커튼설치",
       "order": 5
     }
   ],
@@ -68,21 +68,12 @@
     },
     {
       "id": "01K00000000000000000000002",
-      "title": "크린부스 시공사례",
-      "categoryId": "field-msacpr26-zj3",
+      "title": "크린부스",
+      "categoryId": "field-msads404-15oe",
       "order": 2,
       "published": true,
       "coverImageId": "img_cleanroom_01",
       "images": [
-        {
-          "id": "img_01KYYP3EF0ZE188APTC6GHFEKD",
-          "file": "images/portfolio/01K00000000000000000000002/img_01KYYP3EF0ZE188APTC6GHFEKD.webp",
-          "alt": "테스트임",
-          "caption": "테스트임",
-          "width": 457,
-          "height": 602,
-          "order": 1
-        },
         {
           "id": "img_cleanroom_01",
           "file": "images/portfolio/01K00000000000000000000002/img_cleanroom_01.webp",
@@ -90,7 +81,7 @@
           "caption": "크린부스 시공",
           "width": 1920,
           "height": 748,
-          "order": 2
+          "order": 1
         },
         {
           "id": "img_cleanroom_02",
@@ -99,7 +90,7 @@
           "caption": "크린부스 시공",
           "width": 1920,
           "height": 748,
-          "order": 3
+          "order": 2
         },
         {
           "id": "img_cleanroom_03",
@@ -108,7 +99,7 @@
           "caption": "크린부스 시공",
           "width": 1920,
           "height": 748,
-          "order": 4
+          "order": 3
         },
         {
           "id": "img_cleanroom_04",
@@ -117,7 +108,7 @@
           "caption": "크린부스 시공",
           "width": 748,
           "height": 1920,
-          "order": 5
+          "order": 4
         },
         {
           "id": "img_cleanroom_05",
@@ -126,7 +117,7 @@
           "caption": "크린부스 시공",
           "width": 1920,
           "height": 748,
-          "order": 6
+          "order": 5
         },
         {
           "id": "img_cleanroom_06",
@@ -135,7 +126,7 @@
           "caption": "크린부스 시공",
           "width": 1920,
           "height": 748,
-          "order": 7
+          "order": 6
         },
         {
           "id": "img_cleanroom_07",
@@ -144,16 +135,16 @@
           "caption": "크린부스 시공",
           "width": 1920,
           "height": 748,
-          "order": 8
+          "order": 7
         }
       ]
     },
     {
       "id": "01K00000000000000000000003",
-      "title": "판넬타입 시공사례",
-      "categoryId": "field-msacpr26-18x8",
+      "title": "판넬타입",
+      "categoryId": "field-msads404-1b3g",
       "order": 3,
-      "published": false,
+      "published": true,
       "coverImageId": "img_pannel_01",
       "images": [
         {
@@ -195,48 +186,11 @@
       ]
     },
     {
-      "id": "01K00000000000000000000004",
-      "title": "커튼설치 시공사례",
-      "categoryId": "field-msacpr26-186h",
-      "order": 4,
-      "published": false,
-      "coverImageId": "img_curtain_01",
-      "images": [
-        {
-          "id": "img_curtain_01",
-          "file": "images/portfolio/01K00000000000000000000004/img_curtain_01.webp",
-          "alt": "커튼 설치 시공",
-          "caption": "커튼 설치 시공",
-          "width": 1920,
-          "height": 1920,
-          "order": 1
-        },
-        {
-          "id": "img_curtain_02",
-          "file": "images/portfolio/01K00000000000000000000004/img_curtain_02.webp",
-          "alt": "커튼 설치 시공",
-          "caption": "커튼 설치 시공",
-          "width": 1920,
-          "height": 1920,
-          "order": 2
-        },
-        {
-          "id": "img_curtain_03",
-          "file": "images/portfolio/01K00000000000000000000004/img_curtain_03.webp",
-          "alt": "커튼 설치 시공",
-          "caption": "커튼 설치 시공",
-          "width": 1920,
-          "height": 748,
-          "order": 3
-        }
-      ]
-    },
-    {
       "id": "01K00000000000000000000005",
-      "title": "파티션 시공사례",
-      "categoryId": "field-msacpr26-4nn",
-      "order": 5,
-      "published": false,
+      "title": "파티션",
+      "categoryId": "field-msads404-lmi",
+      "order": 4,
+      "published": true,
       "coverImageId": "img_partition_01",
       "images": [
         {
@@ -262,6 +216,43 @@
           "file": "images/portfolio/01K00000000000000000000005/img_partition_03.webp",
           "alt": "파티션 시공",
           "caption": "파티션 시공",
+          "width": 1920,
+          "height": 748,
+          "order": 3
+        }
+      ]
+    },
+    {
+      "id": "01K00000000000000000000004",
+      "title": "커튼설치",
+      "categoryId": "field-msads404-ot8",
+      "order": 5,
+      "published": true,
+      "coverImageId": "img_curtain_01",
+      "images": [
+        {
+          "id": "img_curtain_01",
+          "file": "images/portfolio/01K00000000000000000000004/img_curtain_01.webp",
+          "alt": "커튼 설치 시공",
+          "caption": "커튼 설치 시공",
+          "width": 1920,
+          "height": 1920,
+          "order": 1
+        },
+        {
+          "id": "img_curtain_02",
+          "file": "images/portfolio/01K00000000000000000000004/img_curtain_02.webp",
+          "alt": "커튼 설치 시공",
+          "caption": "커튼 설치 시공",
+          "width": 1920,
+          "height": 1920,
+          "order": 2
+        },
+        {
+          "id": "img_curtain_03",
+          "file": "images/portfolio/01K00000000000000000000004/img_curtain_03.webp",
+          "alt": "커튼 설치 시공",
+          "caption": "커튼 설치 시공",
           "width": 1920,
           "height": 748,
           "order": 3
