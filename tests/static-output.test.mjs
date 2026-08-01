@@ -4,13 +4,24 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { multilineHtml } from "../scripts/lib/render.mjs";
+import { multilineHtml, renderServices } from "../scripts/lib/render.mjs";
 
 test("화면 표시 텍스트의 Enter를 HTML 줄바꿈으로 변환하고 이스케이프한다", () => {
   assert.equal(
     multilineHtml("첫 번째 줄\n두 번째 <줄>"),
     "첫 번째 줄<br>두 번째 &lt;줄&gt;",
   );
+});
+
+test("공개 서비스가 없으면 서비스 영역을 생성하지 않는다", () => {
+  const services = {
+    sectionTitle: "시공 분야",
+    sectionDesc: "서비스 안내",
+    items: [
+      { id: "hidden", title: "비공개", description: "비공개 서비스", icon: "grid", order: 1, published: false },
+    ],
+  };
+  assert.equal(renderServices(services), "");
 });
 
 test("정적 결과물에 핵심 콘텐츠와 SEO 정보가 포함된다", async () => {

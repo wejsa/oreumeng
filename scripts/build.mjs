@@ -152,6 +152,9 @@ const build = async () => {
     "Portfolio Section",
     renderServices(content.services),
   );
+  if (!content.services.items.some((item) => item.published)) {
+    html = html.replace(/\s*<a\s+href="#services"[^>]*>[\s\S]*?<\/a>/g, "");
+  }
   html = replaceSection(
     html,
     "Portfolio Section",
@@ -184,4 +187,3 @@ const build = async () => {
 };
 
 await build();
-

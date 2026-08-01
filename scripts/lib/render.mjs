@@ -66,7 +66,14 @@ export const renderAbout = (about, currentYear) => `
         </div>
     </section>`;
 
-export const renderServices = (services) => `
+export const renderServices = (services) => {
+  const publishedItems = services.items
+    .filter((item) => item.published)
+    .sort((a, b) => a.order - b.order);
+
+  if (!publishedItems.length) return "";
+
+  return `
     <!-- Services Section -->
     <section class="section section-dark" id="services">
         <div class="container">
@@ -76,9 +83,7 @@ export const renderServices = (services) => `
                 <p class="section-desc">${multilineHtml(services.sectionDesc)}</p>
             </div>
             <div class="services-grid">
-                ${services.items
-                  .filter((item) => item.published)
-                  .sort((a, b) => a.order - b.order)
+                ${publishedItems
                   .map(
                     (item) => `<div class="service-card">
                     <div class="service-icon">${iconSvg(item.icon)}</div>
@@ -90,6 +95,7 @@ export const renderServices = (services) => `
             </div>
         </div>
     </section>`;
+};
 
 export const renderPortfolio = (portfolio) => {
   const categories = [...portfolio.categories].sort((a, b) => a.order - b.order);
