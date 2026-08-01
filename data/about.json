@@ -7,7 +7,7 @@
   "stats": [
     {
       "type": "static",
-      "value": "200+",
+      "value": "100+",
       "label": "시공 현장"
     },
     {
@@ -17,6 +17,6 @@
       "label": "시공 경력"
     }
   ],
-  "image": "images/about/img_01KYYJ4MXVFECH7Y2Y3H7WX1XN.webp",
+  "image": "images/about/main.webp",
   "imageAlt": "오름이엔지 클린룸 시공 현장"
 }
