@@ -1,3 +1,5 @@
+import { watermarkLayout } from "/watermark.js";
+
 const state = {
   content: null,
   baseCommit: null,
@@ -14,6 +16,8 @@ const state = {
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const clone = (value) => JSON.parse(JSON.stringify(value));
+const brandLogoUrl = "https://oreumeng.co.kr/images/oreumeng_logo.svg";
+let brandLogoPromise;
 const escapeHtml = (value = "") =>
   String(value)
     .replaceAll("&", "&amp;")
@@ -296,7 +300,7 @@ const caseCard = (item, index, total) => {
           <label class="check-label published-check"><input data-case-field="published" type="checkbox" ${item.published ? "checked" : ""}> 홈페이지에 공개</label>
         </div>
         <div class="panel-heading">
-          <div><h3>현장 사진 (${item.images.length}장)</h3><p class="help">대표 사진과 표시 순서를 지정할 수 있습니다.</p></div>
+          <div><h3>현장 사진 (${item.images.length}장)</h3><p class="help">첫 사진이 대표 사진으로 사용되며, 새 사진에는 오른쪽 아래에 CI가 자동으로 표시됩니다.</p></div>
           <label class="upload-button">사진 추가<input data-case-upload type="file" accept="image/jpeg,image/png,image/webp" multiple hidden></label>
         </div>
         <div class="upload-progress" hidden></div>
@@ -372,7 +376,37 @@ const loadBitmap = async (file) => {
   }
 };
 
-const optimizeImage = async (file) => {
+const loadBrandLogo = () => {
+  if (!brandLogoPromise) {
+    brandLogoPromise = new Promise((resolve, reject) => {
+      const image = new Image();
+      image.crossOrigin = "anonymous";
+      image.addEventListener("load", () => resolve(image), { once: true });
+      image.addEventListener("error", () => reject(new Error("오름이엔지 CI를 불러오지 못했습니다.")), { once: true });
+      image.src = brandLogoUrl;
+    }).catch((error) => {
+      brandLogoPromise = undefined;
+      throw error;
+    });
+  }
+  return brandLogoPromise;
+};
+
+const drawPortfolioWatermark = async (context, width, height) => {
+  const logo = await loadBrandLogo();
+  const layout = watermarkLayout({
+    canvasWidth: width,
+    canvasHeight: height,
+    logoWidth: logo.naturalWidth,
+    logoHeight: logo.naturalHeight,
+  });
+  context.save();
+  context.globalAlpha = layout.opacity;
+  context.drawImage(logo, layout.x, layout.y, layout.width, layout.height);
+  context.restore();
+};
+
+const optimizeImage = async (file, targetKind) => {
   if (!/^image\/(jpeg|png|webp)$/.test(file.type)) {
     throw new Error(`${file.name}: JPG, PNG, WebP 파일만 사용할 수 있습니다.`);
   }
@@ -385,8 +419,15 @@ const optimizeImage = async (file) => {
   const canvas = document.createElement("canvas");
   canvas.width = width;
   canvas.height = height;
-  canvas.getContext("2d", { alpha: false }).drawImage(bitmap, 0, 0, width, height);
-  bitmap.close?.();
+  const context = canvas.getContext("2d", { alpha: false });
+  try {
+    context.drawImage(bitmap, 0, 0, width, height);
+    if (targetKind === "portfolio") {
+      await drawPortfolioWatermark(context, width, height);
+    }
+  } finally {
+    bitmap.close?.();
+  }
   const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/webp", 0.82));
   if (!blob) throw new Error(`${file.name}: WebP 변환에 실패했습니다.`);
   if (blob.size > 2_000_000) {
@@ -396,7 +437,7 @@ const optimizeImage = async (file) => {
 };
 
 const uploadOptimizedImage = async (file, targetKind, caseId = "") => {
-  const optimized = await optimizeImage(file);
+  const optimized = await optimizeImage(file, targetKind);
   const form = new FormData();
   form.set("targetKind", targetKind);
   form.set("caseId", caseId);
@@ -428,7 +469,7 @@ const uploadCaseImages = async (caseIndex, files, progress) => {
   progress.hidden = false;
   try {
     for (let index = 0; index < files.length; index += 1) {
-      progress.textContent = `${files.length}장 중 ${index + 1}장 최적화·업로드 중…`;
+      progress.textContent = `${files.length}장 중 ${index + 1}장 최적화·CI 합성·업로드 중…`;
       const result = await uploadOptimizedImage(files[index], "portfolio", item.id);
       const image = {
         id: result.imageId,

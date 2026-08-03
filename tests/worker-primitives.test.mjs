@@ -4,6 +4,7 @@ import test from "node:test";
 import { imageId, ulid, validImageId, validUlid } from "../worker/src/ids.js";
 import { webpDimensions } from "../worker/src/image.js";
 import { signReceipt, verifyReceipt } from "../worker/src/receipt.js";
+import { watermarkLayout } from "../worker/public/watermark.js";
 import worker from "../worker/src/index.js";
 
 test("ULID와 이미지 ID가 허용 형식으로 생성된다", () => {
@@ -24,6 +25,36 @@ test("실제 WebP 파일의 크기를 읽는다", async () => {
   assert.ok(dimensions.width > 0);
   assert.ok(dimensions.height > 0);
   assert.ok(Math.max(dimensions.width, dimensions.height) <= 1920);
+});
+
+test("포트폴리오 CI를 사진 오른쪽 아래에 비례 배치한다", () => {
+  const landscape = watermarkLayout({
+    canvasWidth: 1920,
+    canvasHeight: 1080,
+    logoWidth: 787,
+    logoHeight: 248,
+  });
+  assert.equal(landscape.x + landscape.width < 1920, true);
+  assert.equal(landscape.y + landscape.height < 1080, true);
+  assert.equal(landscape.width <= 1920 * 0.34 + 1, true);
+  assert.equal(landscape.height <= 1080 * 0.25 + 1, true);
+  assert.equal(landscape.opacity, 0.55);
+
+  const portrait = watermarkLayout({
+    canvasWidth: 1080,
+    canvasHeight: 1920,
+    logoWidth: 787,
+    logoHeight: 248,
+  });
+  assert.equal(portrait.x > 0, true);
+  assert.equal(portrait.y > 0, true);
+});
+
+test("포트폴리오 업로드에만 오름이엔지 CI를 합성한다", async () => {
+  const adminSource = await readFile(new URL("../worker/public/admin.js", import.meta.url), "utf8");
+  assert.match(adminSource, /if \(targetKind === "portfolio"\)/);
+  assert.match(adminSource, /await drawPortfolioWatermark\(context, width, height\)/);
+  assert.match(adminSource, /CI 합성·업로드 중/);
 });
 
 test("업로드 영수증 서명을 검증하고 변조를 거부한다", async () => {
